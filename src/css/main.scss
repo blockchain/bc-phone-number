@@ -1,0 +1,48 @@
+// rgba is needed for the selected flag hover state to blend in with
+// the border-highlighting some browsers give the input on focus
+$hoverColor: rgba(0, 0, 0, 0.05) !default;
+$greyText: #999 !default;
+$greyBorder: #CCC !default;
+
+$flagHeight: 15px !default;
+$flagWidth: 20px !default;
+$flagPadding: 8px !default;
+// this border width is used for the popup and divider, but it is also
+// assumed to be the border width of the input, which we do not control
+$borderWidth: 1px !default;
+
+$arrowHeight: 4px !default;
+$arrowWidth: 6px !default;
+$triangleBorder: 3px !default;
+$arrowPadding: 4px !default;
+$arrowColor: #555 !default;
+
+$inputPadding: 6px !default;
+$selectedFlagWidth: $flagWidth + $flagPadding + $arrowWidth + (2 * $arrowPadding) !default;
+
+// image related variables
+$flagsImagePath: "../img/" !default;
+$flagsImageName: "flags" !default;
+$flagsImageExtension: "png" !default;
+
+.iti-flag {
+  width: $flagWidth;
+  height: $flagHeight;
+  box-shadow: 0px 0px 1px 0px #888;
+  background-image: url("#{$flagsImagePath}#{$flagsImageName}.#{$flagsImageExtension}");
+  background-repeat: no-repeat;
+  // empty state
+  background-color: #DBDBDB;
+  background-position: $flagWidth 0;
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    background-image: url("#{$flagsImagePath}#{$flagsImageName}@2x.#{$flagsImageExtension}");
+  }
+}
+
+
+
+// hack for Nepal which is the only flag that is not square/rectangle, so it has transparency, so you can see the default grey behind it
+.iti-flag.np {
+  background-color: transparent;
+}

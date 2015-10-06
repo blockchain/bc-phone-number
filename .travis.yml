@@ -1,0 +1,12 @@
+sudo: false
+language: node_js
+node_js:
+  - '0.10'
+  - '0.12'
+  - '4.0'
+  - '4.1'
+before_script:
+  - npm install -g bower grunt-cli gulp karma-cli evenizer
+  - gem install sass
+  - bower install
+script: 'gulp build && gulp test'

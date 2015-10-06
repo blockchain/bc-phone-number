@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app='phoneNumber'>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Phone Number Demo</title>
+
+  <!-- bower:css -->
+  <link rel='stylesheet' href='bower_components/angular-ui-select/dist/select.css' />
+  <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+  <!-- endbower -->
+
+  <!-- bower:js -->
+  <script src='bower_components/jquery/dist/jquery.js'></script>
+  <script src='bower_components/angular/angular.js'></script>
+  <script src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js'></script>
+  <script src='bower_components/angular-ui-select/dist/select.js'></script>
+  <script src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
+  <!-- endbower -->
+
+  <link rel='stylesheet' href='build/css/main.css'>
+  <link rel='stylesheet' href='build/css/sprite.css'>
+
+  <script src='lib/js/libphonenumber.min.js'></script>
+  <script src='src/js/trie.js'></script>
+  <script src='src/js/countries.js'></script>
+  <script src='src/js/phone-number.js'></script>
+</head>
+<body ng-controller='MainCtrl as vm'>
+  <div class='container'>
+    <h1>Phone Number Demo</h1>
+    <phone-number ng-model='vm.theNumber' default-country='us' preferred-countries='us gb ca' is-valid='vm.isValid'></phone-number>
+    <p>Is valid: <span ng-bind='vm.isValid'></span></p>
+    <p>Number: <span ng-bind='vm.theNumber'></span></p>
+  </div>
+</body>
+</html>

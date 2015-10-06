@@ -1,0 +1,30 @@
+<section class='input-group'>
+  <div class='input-group-btn'>
+    <button class='btn btn-default' type='button' ng-click='resetCountry()'>
+      <span class='glyphicon iti-flag' ng-class='selectedCountryCode'></span>
+    </button>
+    <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true'
+            aria-expanded='false'>
+      <span class='caret'></span>
+      <span class='sr-only'>Toggle Dropdown</span>
+    </button>
+    <ul class='dropdown-menu' style='max-height: 10em; overflow-y: scroll;'>
+      <li ng-repeat='country in preferredCountries' ng-click='selectCountry(country)'
+          ng-class='{active: isCountrySelected(country)}'>
+        <a href='#' target='_self' style='padding-left: 1em'>
+          <i class='glyphicon iti-flag' ng-class='country.iso2' style='margin-right: 1em'></i>
+          <span ng-bind='country.name'></span>
+        </a>
+      </li>
+      <li role='separator' class='divider' ng-show='preferredCountries'></li>
+      <li ng-repeat='country in allCountries' ng-click='selectCountry(country)'
+          ng-class='{active: isCountrySelected(country)}'>
+        <a href='#' target='_self' style='padding-left: 1em'>
+          <i class='glyphicon iti-flag' ng-class='country.iso2' style='margin-right: 1em'></i>
+          <span ng-bind='country.name'></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <input type='tel' class='form-control' ng-model='number'>
+</section>
