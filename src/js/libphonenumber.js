@@ -1,25 +1,13 @@
-/**
- * Follow instructions here to compile this file:
- * https://github.com/googlei18n/libphonenumber/blob/master/javascript/README.md
- *
- * Once setup, to re-compile:
- * 1) Copy the contents of this file into libphonenumber/javascript/i18n/phonenumbers/demo.js
- * 2) ant -f libphonenumber/javascript/build.xml compile-demo
- * 3) Copy libphonenumber/javascript/i18n/phonenumbers/demo-compiled.js to intl-tel-input/lib/libphonenumber/build/utils.js
- */
+'use strict';
 
-// includes
-goog.require('i18n.phonenumbers.AsYouTypeFormatter');
-goog.require('i18n.phonenumbers.PhoneNumberFormat');
-goog.require('i18n.phonenumbers.PhoneNumberUtil');
-
+var libphonenumber = require('google-libphonenumber');
 
 // get an example number for the given country code
 function getExampleNumber(countryCode, national, numberType) {
   try {
-    var phoneUtil = i18n.phonenumbers.PhoneNumberUtil.getInstance();
+    var phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
     var numberObj = phoneUtil.getExampleNumberForType(countryCode, numberType);
-    var format = (national) ? i18n.phonenumbers.PhoneNumberFormat.NATIONAL : i18n.phonenumbers.PhoneNumberFormat.INTERNATIONAL;
+    var format = (national) ? libphonenumber.PhoneNumberFormat.NATIONAL : libphonenumber.PhoneNumberFormat.INTERNATIONAL;
     return phoneUtil.format(numberObj, format);
   } catch (e) {
     return "";
@@ -30,9 +18,9 @@ function getExampleNumber(countryCode, national, numberType) {
 // format the given number to the given type
 function formatNumberByType(number, countryCode, type) {
   try {
-    var phoneUtil = i18n.phonenumbers.PhoneNumberUtil.getInstance();
+    var phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
     var numberObj = phoneUtil.parseAndKeepRawInput(number, countryCode);
-    type = (typeof type == "undefined") ? i18n.phonenumbers.PhoneNumberFormat.E164 : type;
+    type = (typeof type == "undefined") ? libphonenumber.PhoneNumberFormat.E164 : type;
     return phoneUtil.format(numberObj, type);
   } catch (e) {
     return "";
@@ -43,7 +31,7 @@ function formatNumberByType(number, countryCode, type) {
 // check if given number is valid
 function isValidNumber(number, countryCode) {
   try {
-    var phoneUtil = i18n.phonenumbers.PhoneNumberUtil.getInstance();
+    var phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
     var numberObj = phoneUtil.parseAndKeepRawInput(number, countryCode);
     return phoneUtil.isValidNumber(numberObj);
   } catch (e) {
@@ -55,24 +43,24 @@ function isValidNumber(number, countryCode) {
 // get more info if the validation has failed e.g. too long/too short
 function getValidationError(number, countryCode) {
   try {
-    var phoneUtil = i18n.phonenumbers.PhoneNumberUtil.getInstance();
+    var phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
     var numberObj = phoneUtil.parseAndKeepRawInput(number, countryCode);
     return phoneUtil.isPossibleNumberWithReason(numberObj);
   } catch (e) {
     //console.log(e);
 
     // here I convert thrown errors into ValidationResult enums (if possible)
-    if (e == i18n.phonenumbers.Error.INVALID_COUNTRY_CODE) {
-      return i18n.phonenumbers.PhoneNumberUtil.ValidationResult.INVALID_COUNTRY_CODE;
+    if (e == libphonenumber.Error.INVALID_COUNTRY_CODE) {
+      return libphonenumber.PhoneNumberUtil.ValidationResult.INVALID_COUNTRY_CODE;
     }
-    if (e == i18n.phonenumbers.Error.NOT_A_NUMBER) {
+    if (e == libphonenumber.Error.NOT_A_NUMBER) {
       return 4;
     }
-    if (e == i18n.phonenumbers.Error.TOO_SHORT_AFTER_IDD || e == i18n.phonenumbers.Error.TOO_SHORT_NSN) {
-      return i18n.phonenumbers.PhoneNumberUtil.ValidationResult.TOO_SHORT;
+    if (e == libphonenumber.Error.TOO_SHORT_AFTER_IDD || e == libphonenumber.Error.TOO_SHORT_NSN) {
+      return libphonenumber.PhoneNumberUtil.ValidationResult.TOO_SHORT;
     }
-    if (e == i18n.phonenumbers.Error.TOO_LONG) {
-      return i18n.phonenumbers.PhoneNumberUtil.ValidationResult.TOO_LONG;
+    if (e == libphonenumber.Error.TOO_LONG) {
+      return libphonenumber.PhoneNumberUtil.ValidationResult.TOO_LONG;
     }
 
     // broken
@@ -86,7 +74,7 @@ function formatNumber(val, countryCode, addSuffix, allowExtension, isAllowedKey)
   try {
     var clean = val.replace(/\D/g, ""),
       // NOTE: we use AsYouTypeFormatter because the default format function can't handle incomplete numbers e.g. "+17024" formats to "+1 7024" as opposed to "+1 702-4"
-      formatter = new i18n.phonenumbers.AsYouTypeFormatter(countryCode),
+      formatter = new libphonenumber.AsYouTypeFormatter(countryCode),
       // if clean is empty, we still need this to be a string otherwise we get errors later
       result = "",
       next,
@@ -147,7 +135,7 @@ function formatNumber(val, countryCode, addSuffix, allowExtension, isAllowedKey)
 // get the type of the given number e.g. fixed-line/mobile
 function getNumberType(number, countryCode) {
   try {
-    var phoneUtil = i18n.phonenumbers.PhoneNumberUtil.getInstance();
+    var phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
     var numberObj = phoneUtil.parseAndKeepRawInput(number, countryCode);
     return phoneUtil.getNumberType(numberObj)
   } catch (e) {
@@ -192,7 +180,7 @@ var numberType = {
 
 
 // copied this from i18n.phonenumbers.PhoneNumberUtil.ValidationResult in https://code.google.com/p/libphonenumber/source/browse/trunk/javascript/i18n/phonenumbers/phonenumberutil.js and again put the keys in quotes.
-// Also: added NOT_A_NUMBER to match i18n.phonenumbers.Error.NOT_A_NUMBER
+// Also: added NOT_A_NUMBER to match libphonenumber.Error.NOT_A_NUMBER
 var validationError = {
   "IS_POSSIBLE": 0,
   "INVALID_COUNTRY_CODE": 1,
@@ -209,16 +197,15 @@ var numberFormat = {
   "RFC3966": 3
 };
 
+module.exports = {
+  formatNumberByType: formatNumberByType,
+  getValidationError: getValidationError,
+  getExampleNumber: getExampleNumber,
+  getNumberType: getNumberType,
+  isValidNumber: isValidNumber,
+  formatNumber: formatNumber,
 
-// exports
-goog.exportSymbol('libphonenumber', {});
-goog.exportSymbol('libphonenumber.formatNumber', formatNumber);
-goog.exportSymbol('libphonenumber.formatNumberByType', formatNumberByType);
-goog.exportSymbol('libphonenumber.getExampleNumber', getExampleNumber);
-goog.exportSymbol('libphonenumber.getNumberType', getNumberType);
-goog.exportSymbol('libphonenumber.getValidationError', getValidationError);
-goog.exportSymbol('libphonenumber.isValidNumber', isValidNumber);
-// enums
-goog.exportSymbol('libphonenumber.numberType', numberType);
-goog.exportSymbol('libphonenumber.validationError', validationError);
-goog.exportSymbol('libphonenumber.numberFormat', numberFormat);
+  validationError: validationError,
+  numberFormat: numberFormat,
+  numberType: numberType
+};

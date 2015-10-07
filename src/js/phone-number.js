@@ -1,10 +1,17 @@
 'use strict';
 
+global.jQuery = require('jquery');
+require('bootstrap');
+
+var libphonenumber = require('./libphonenumber');
+var countries = require('./countries');
+var angular = require('angular');
+
 angular.module('phoneNumber', [])
-.controller('MainCtrl', ['$window', function($window) {
+.controller('MainCtrl', function () {
 
   this.theNumber = '165';
-}])
+})
 .directive('phoneNumber', function () {
 
   function hasPrefix (number) {
@@ -12,8 +19,8 @@ angular.module('phoneNumber', [])
   }
 
   function getPrefix (number) {
-    if (number && number[0] === '+') { return '+';  }
-    else                             { return '';   }
+    if (number && number[0] === '+') { return '+'; }
+    else                             { return '';  }
   }
 
   function getDigits (number) {
@@ -32,22 +39,14 @@ angular.module('phoneNumber', [])
   }
 
   function formatNumber (number, countryCode) {
-    return libphonenumber.formatNumber(number, countryCode, true);
-  }
-
-  function getCountryCode (digits) {
-    return window.countryCodes.longestPrefix(digits).value;
-  }
-
-  function getDialCode (digits) {
-    return window.countryCodes.longestPrefix(digits).key;
+    return libphonenumber.formatNumber(number, countryCode);
   }
 
   function changeDialCode (number, newDialCode) {
     if (!number) { return ('+' + newDialCode); }
     else {
       var digits = getDigits(number);
-      var oldDialCode = getDialCode(digits);
+      var oldDialCode = countries.getDialCode(digits);
 
       if (oldDialCode) {
         var numberWithNewDialCode = digits.replace(oldDialCode, newDialCode);
@@ -91,12 +90,12 @@ angular.module('phoneNumber', [])
     },
     link: function (scope, element, attrs) {
       scope.selectedCountryCode = scope.defaultCountryCode || 'us';
-      scope.allCountries = window.allCountries;
+      scope.allCountries = countries.allCountries;
       scope.number = scope.ngModel;
 
       if (scope.preferredCountriesCodes) {
         var preferredCodes = scope.preferredCountriesCodes.split(' ');
-        scope.preferredCountries = getPreferredCountries(window.allCountries, preferredCodes);
+        scope.preferredCountries = getPreferredCountries(countries.allCountries, preferredCodes);
       }
 
       scope.selectCountry = function (country) {
@@ -121,7 +120,7 @@ angular.module('phoneNumber', [])
       scope.$watch('number', function (newValue) {
         if (scope.selectedCountryCode) {
           var number = scope.number;
-          var dialCode = getDialCode(getDigits(number));
+          var dialCode = countries.getDialCode(getDigits(number));
           scope.isValid = libphonenumber.isValidNumber(number, dialCode);
         }
       });
@@ -131,10 +130,10 @@ angular.module('phoneNumber', [])
         oldValue = oldValue || '';
 
         var digits = getDigits(newValue);
-        var countryCode = getCountryCode(digits);
+        var countryCode = countries.getCountryCode(digits);
 
         if (countryCode) {
-          var dialCode = getDialCode(digits);
+          var dialCode = countries.getDialCode(digits);
           var number = formatNumberCarefully(dialCode, oldValue, newValue);
 
           scope.selectedCountryCode = countryCode;
@@ -146,3 +145,5 @@ angular.module('phoneNumber', [])
     }
   };
 });
+
+module.exports = 'phoneNumber';

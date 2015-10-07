@@ -21,21 +21,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        // bower:js
-        '../bower_components/jquery/dist/jquery.js',
-        '../bower_components/angular/angular.js',
-        '../bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-        '../bower_components/angular-ui-select/dist/select.js',
-        '../bower_components/bootstrap/dist/js/bootstrap.js',
-        '../bower_components/angular-mocks/angular-mocks.js',
-        // endbower
-
+        '../build/js/bundle.js',
+        '../node_modules/angular-mocks/angular-mocks.js',
         '../build/js/templates.js',
-
-        '../lib/js/libphonenumber.min.js',
-        '../src/js/trie.js',
-        '../src/js/countries.js',
-        '../src/js/phone-number.js',
 
         'spec/*.js'
     ],

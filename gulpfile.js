@@ -8,12 +8,16 @@ var templateCache = require('gulp-angular-templatecache'),
     exec          = require('gulp-exec'),
     scss          = require('gulp-scss');
 
-var wiredep = require('wiredep').stream;
-
 var GLOBS = {
   assets: '{index.html,src/*/*.{html,scss,js}}',
   styles: '{src/css/main.scss,build/css/sprite.scss}'
 };
+
+gulp.task('browserify:dev', function () {
+  gulp.src('src/js/phone-number.js')
+    .pipe(exec('browserify --entry <%= file.path %> --debug --outfile build/js/bundle.js'))
+    .pipe(exec.reporter());
+});
 
 gulp.task('build-flags', function () {
   gulp.src('build')
@@ -53,18 +57,6 @@ gulp.task('scss', function () {
     .pipe(gulp.dest('./build/css'));
 });
 
-gulp.task('wiredep', function () {
-  gulp.src('index.html')
-    .pipe(wiredep())
-    .pipe(gulp.dest('.'));
-
-  gulp.src('test/karma.conf.js')
-    .pipe(wiredep({
-      devDependencies: true,
-    }))
-    .pipe(gulp.dest('test/'));
-});
-
 gulp.task('connect', function () {
   connect.server({
     livereload: true,
@@ -85,8 +77,7 @@ gulp.task('watch', function () {
   gulp.watch(['src/html/*.html'], ['inline-templates']);
   gulp.watch([GLOBS.assets], ['reload']);
   gulp.watch([GLOBS.styles], ['scss']);
-  gulp.watch(['bower.json'], ['wiredep']);
 });
 
-gulp.task('build', ['scss', 'inline-templates', 'wiredep', 'build-flags']);
-gulp.task('default', ['scss', 'inline-templates', 'wiredep', 'connect', 'watch']);
+gulp.task('build', ['scss', 'inline-templates', 'browserify:dev', 'build-flags']);
+gulp.task('default', ['scss', 'inline-templates', 'connect', 'watch']);

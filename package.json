@@ -3,13 +3,27 @@
   "version": "0.0.0",
   "description": "An AngularJS international phone input",
   "main": "src/js/phone-number.js",
-  "scripts": {"test": "gulp test"},
-  "keywords": ["angularjs"],
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": [
+    "angularjs"
+  ],
   "author": "Abdullah Alansari <ahimta@gmail.com>",
   "homepage": "https://github.com/Ahimta/phone-number",
-  "repository": {"url": "git://github.com/Ahimta/phone-number.git"},
+  "repository": {
+    "url": "git://github.com/Ahimta/phone-number.git"
+  },
   "license": "MIT",
+  "dependencies": {
+    "angular": "^1.4.7",
+    "bootstrap": "^3.3.5",
+    "google-libphonenumber": "^1.0.6",
+    "jquery": "^2.1.4"
+  },
   "devDependencies": {
+    "angular-mocks": "^1.4.7",
+    "browserify": "^11.2.0",
     "grunt": "^0.4.5",
     "grunt-contrib-sass": "^0.9.2",
     "grunt-exec": "^0.4.6",
@@ -32,9 +46,8 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-safari-launcher": "^0.1.1",
     "phantomjs": "^1.9.18",
-    "wiredep": "^2.2.2"
+    "watchify": "^3.4.0"
   },
-  "dependencies": {},
   "engines": {
     "node": ">=0.10.0"
   }

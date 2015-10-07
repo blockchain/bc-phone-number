@@ -1,3 +1,5 @@
+'use strict';
+
 function Node() {
   this.children = new Array(9);
 }
@@ -73,3 +75,5 @@ Trie.prototype.longestPrefix = function (key) {
     else                                 { return Nil;      }
   }
 }
+
+module.exports = Trie;

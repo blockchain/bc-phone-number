@@ -1,3 +1,4 @@
+'use strict';
 // Tell JSHint to ignore this warning: "character may get silently deleted by one or more browsers"
 // jshint -W100
 
@@ -1285,6 +1286,8 @@ var allCountries = [
   ]
 ];
 
+var Trie = require('./trie');
+
 var countryCodes = new Trie();
 
 // loop over all of the countries above
@@ -1297,12 +1300,21 @@ for (var i = 0; i < allCountries.length; i++) {
     priority: c[3] || 0,
     areaCodes: c[4] || null
   };
-  var dialCode = ""+c[2];
-  // countryCodes[dialCode] = c[1];
-  countryCodes.put(dialCode, c[1]);
-  // console.log(countryCodes.longestPrefix(dialCode));
+
+  countryCodes.put(""+c[2], c[1]);
 }
 
+function getCountryCode (digits) {
+  return countryCodes.longestPrefix(digits).value;
+}
 
-window.allCountries = allCountries;
-window.countryCodes = countryCodes;
+function getDialCode (digits) {
+  return countryCodes.longestPrefix(digits).key;
+}
+
+module.exports = {
+  getCountryCode: getCountryCode,
+  getDialCode: getDialCode,
+  allCountries: allCountries,
+  countryCodes: countryCodes
+};
