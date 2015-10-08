@@ -82,6 +82,19 @@ module.exports = function(grunt) {
           browserifyOptions: {bundleExternal: false}
         }
       }
+    },
+    bump: {
+      options: {
+        files: ['bower.json', 'package.json'],
+        commit: true,
+        commitMessage: 'Release v%VERSION%',
+        commitFiles: ['bower.json', 'package.json'],
+        createTag: true,
+        tagName: 'v%VERSION%',
+        tagMessage: 'Version %VERSION%',
+        push: true,
+        pushTo: 'origin'
+      }
     }
   });
 
@@ -89,6 +102,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-spritesmith');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-retinafy');
+  grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-exec');
 
   grunt.registerTask('build', ['responsive_images', 'exec', 'retinafy', 'sprite']);
