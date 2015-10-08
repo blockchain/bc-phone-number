@@ -77,7 +77,7 @@ module.exports = function(grunt) {
     },
     browserify: {
       dist: {
-        files: {'dist/js/phone-number.js': ['src/js/phone-number.js']},
+        files: {'dist/js/bc-phone-number.js': ['src/js/bc-phone-number.js']},
         options: {
           browserifyOptions: {bundleExternal: false}
         }

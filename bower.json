@@ -1,8 +1,8 @@
 {
-  "name": "phone-number",
+  "name": "bc-phone-number",
   "main": [
-    "dist/css/phone-number.css",
-    "dist/js/phone-number.js",
+    "dist/css/bc-phone-number.css",
+    "dist/js/bc-phone-number.js",
     "dist/img/flags@2x.png",
     "dist/img/flags.png"
   ],
@@ -20,9 +20,9 @@
     "angularjs"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Ahimta/phone-number",
+  "homepage": "https://github.com/Ahimta/bc-phone-number",
   "repository": {
-    "url": "git://github.com/Ahimta/phone-number.git"
+    "url": "git://github.com/Ahimta/bc-phone-number.git"
   },
   "ignore": [
     "**/.*",

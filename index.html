@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app='phoneNumber'>
+<html ng-app='bcPhoneNumber'>
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -16,14 +16,15 @@
   <script src='bower_components/google-libphonenumber/dist/browser/libphonenumber.js'></script>
   <!-- endbower -->
 
-  <link rel='stylesheet' href='dist/css/phone-number.css'>
+  <link rel='stylesheet' href='dist/css/bc-phone-number.css'>
 
-  <script src='dist/js/phone-number.js'></script>
+  <script src='dist/js/bc-phone-number.js'></script>
 </head>
 <body ng-controller='MainCtrl as vm'>
   <div class='container'>
     <h1>Phone Number Demo</h1>
-    <phone-number ng-model='vm.theNumber' default-country='us' preferred-countries='us gb ca' is-valid='vm.isValid'></phone-number>
+    <bc-phone-number ng-model='vm.theNumber' default-country='us' preferred-countries='us gb ca' is-valid='vm.isValid'>
+    </bc-phone-number>
     <p>Is valid: <span ng-bind='vm.isValid'></span></p>
     <p>Number: <span ng-bind='vm.theNumber'></span></p>
   </div>

@@ -49,7 +49,7 @@ gulp.task('wiredep', function () {
 
 gulp.task('concat:css', function () {
   return gulp.src(['build/css/main.css', 'build/css/sprite.css'])
-    .pipe(concat('phone-number.css'))
+    .pipe(concat('bc-phone-number.css'))
     .pipe(gulp.dest('./dist/css/'));
 });
 
@@ -57,8 +57,8 @@ gulp.task('inline-templates', function () {
   return gulp.src('src/html/*.html')
     .pipe(templateCache({
       standalone: true,
-      module: 'phoneNumberTemplates',
-      root: 'src/html'
+      module: 'bcPhoneNumberTemplates',
+      root: 'bc-phone-number'
     }))
     .pipe(gulp.dest('build/js/'));
 });
@@ -69,7 +69,7 @@ gulp.task('build:flags', executeTask('grunt build'));
 
 gulp.task('test', executeTask('karma start test/karma.conf.js'));
 
-gulp.task('deploy', executeTask('sh gh-pages'));
+gulp.task('deploy', executeTask('sh gh-pages.sh'));
 
 gulp.task('scss', function () {
   var main = gulp.src('src/css/main.scss')

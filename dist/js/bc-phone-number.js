@@ -1,6 +1,162 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-angular.module("phoneNumberTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/html/phone-number.html","<section class=\'input-group\'>\n  <div class=\'input-group-btn\'>\n    <button class=\'btn btn-default\' type=\'button\' ng-click=\'resetCountry()\'>\n      <span class=\'glyphicon iti-flag\' ng-class=\'selectedCountryCode\'></span>\n    </button>\n    <button type=\'button\' class=\'btn btn-default dropdown-toggle\' data-toggle=\'dropdown\' aria-haspopup=\'true\'\n            aria-expanded=\'false\'>\n      <span class=\'caret\'></span>\n      <span class=\'sr-only\'>Toggle Dropdown</span>\n    </button>\n    <ul class=\'dropdown-menu\' style=\'max-height: 10em; overflow-y: scroll;\'>\n      <li ng-repeat=\'country in preferredCountries\' ng-click=\'selectCountry(country)\'\n          ng-class=\'{active: isCountrySelected(country)}\'>\n        <a href=\'#\' target=\'_self\' style=\'padding-left: 1em\'>\n          <i class=\'glyphicon iti-flag\' ng-class=\'country.iso2\' style=\'margin-right: 1em\'></i>\n          <span ng-bind=\'country.name\'></span>\n        </a>\n      </li>\n      <li role=\'separator\' class=\'divider\' ng-show=\'preferredCountries\'></li>\n      <li ng-repeat=\'country in allCountries\' ng-click=\'selectCountry(country)\'\n          ng-class=\'{active: isCountrySelected(country)}\'>\n        <a href=\'#\' target=\'_self\' style=\'padding-left: 1em\'>\n          <i class=\'glyphicon iti-flag\' ng-class=\'country.iso2\' style=\'margin-right: 1em\'></i>\n          <span ng-bind=\'country.name\'></span>\n        </a>\n      </li>\n    </ul>\n  </div>\n  <input type=\'tel\' class=\'form-control\' ng-model=\'number\'>\n</section>\n");}]);
+angular.module("bcPhoneNumberTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("bc-phone-number/bc-phone-number.html","<section class=\'input-group\'>\n  <div class=\'input-group-btn\'>\n    <button class=\'btn btn-default\' type=\'button\' ng-click=\'resetCountry()\'>\n      <span class=\'glyphicon iti-flag\' ng-class=\'selectedCountryCode\'></span>\n    </button>\n    <button type=\'button\' class=\'btn btn-default dropdown-toggle\' data-toggle=\'dropdown\' aria-haspopup=\'true\'\n            aria-expanded=\'false\'>\n      <span class=\'caret\'></span>\n      <span class=\'sr-only\'>Toggle Dropdown</span>\n    </button>\n    <ul class=\'dropdown-menu\' style=\'max-height: 10em; overflow-y: scroll;\'>\n      <li ng-repeat=\'country in preferredCountries\' ng-click=\'selectCountry(country)\'\n          ng-class=\'{active: isCountrySelected(country)}\'>\n        <a href=\'#\' target=\'_self\' style=\'padding-left: 1em\'>\n          <i class=\'glyphicon iti-flag\' ng-class=\'country.iso2\' style=\'margin-right: 1em\'></i>\n          <span ng-bind=\'country.name\'></span>\n        </a>\n      </li>\n      <li role=\'separator\' class=\'divider\' ng-show=\'preferredCountries\'></li>\n      <li ng-repeat=\'country in allCountries\' ng-click=\'selectCountry(country)\'\n          ng-class=\'{active: isCountrySelected(country)}\'>\n        <a href=\'#\' target=\'_self\' style=\'padding-left: 1em\'>\n          <i class=\'glyphicon iti-flag\' ng-class=\'country.iso2\' style=\'margin-right: 1em\'></i>\n          <span ng-bind=\'country.name\'></span>\n        </a>\n      </li>\n    </ul>\n  </div>\n  <input type=\'tel\' class=\'form-control\' ng-model=\'number\'>\n</section>\n");}]);
 },{}],2:[function(require,module,exports){
+(function (global){
+'use strict';
+
+global.jQuery = (typeof window !== "undefined" ? window['jQuery'] : typeof global !== "undefined" ? global['jQuery'] : null);
+(typeof window !== "undefined" ? window['bootstrap'] : typeof global !== "undefined" ? global['bootstrap'] : null);
+
+var libphonenumber = require('./libphonenumber');
+var countries = require('./countries');
+var angular = (typeof window !== "undefined" ? window['angular'] : typeof global !== "undefined" ? global['angular'] : null);
+
+global.angular = angular;
+require('../../build/js/templates');
+
+angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
+.controller('MainCtrl', function () {
+
+  this.theNumber = '165';
+})
+.directive('bcPhoneNumber', function () {
+
+  function hasPrefix (number) {
+    return (number[0] === '+');
+  }
+
+  function getPrefix (number) {
+    if (number && number[0] === '+') { return '+'; }
+    else                             { return '';  }
+  }
+
+  function getDigits (number) {
+    if (!number) { return ''; }
+    else {
+      var prefix = getPrefix(number);
+
+      if (prefix === '+')  { return number.substring(1).replace(/\W/g, ''); }
+      else                 { return number.replace(/\W/g, '');              }
+    }
+  }
+
+  function prefixNumber (number) {
+    if (number && !hasPrefix(number)) { return ('+' + number); }
+    else                              { return number;         }
+  }
+
+  function formatNumber (number, countryCode) {
+    return libphonenumber.formatNumber(number, countryCode);
+  }
+
+  function changeDialCode (number, newDialCode) {
+    if (!number) { return ('+' + newDialCode); }
+    else {
+      var digits = getDigits(number);
+      var oldDialCode = countries.getDialCode(digits);
+
+      if (oldDialCode) {
+        var numberWithNewDialCode = digits.replace(oldDialCode, newDialCode);
+        var prefixedNumber = ('+' + numberWithNewDialCode);
+        var formattedNumber = formatNumber(prefixedNumber, newDialCode);
+        return formattedNumber;
+      }
+      else { return number; }
+    }
+  }
+
+  function formatNumberCarefully (dialCode, oldValue, newValue) {
+    if (newValue.length >= oldValue.length) { return formatNumber(prefixNumber(newValue), dialCode); }
+    else                                    { return prefixNumber(newValue);                         }
+  }
+
+  function getPreferredCountries (allCountries, preferredCodes) {
+
+    return allCountries.filter(function (country) {
+
+      return preferredCodes.some(function (code) {
+
+        return country.iso2 == code;
+      });
+    }).map(function (country) {
+      return {
+        dialCode: country.dialCode,
+        name: country.name,
+        iso2: country.iso2
+      };
+    });
+  }
+
+  return {
+    templateUrl: 'bc-phone-number/bc-phone-number.html',
+    scope: {
+      preferredCountriesCodes: '@preferredCountries',
+      defaultCountryCode: '@defaultCountry',
+      isValid: '=',
+      ngModel: '='
+    },
+    link: function (scope, element, attrs) {
+      scope.selectedCountryCode = scope.defaultCountryCode || 'us';
+      scope.allCountries = countries.allCountries;
+      scope.number = scope.ngModel;
+
+      if (scope.preferredCountriesCodes) {
+        var preferredCodes = scope.preferredCountriesCodes.split(' ');
+        scope.preferredCountries = getPreferredCountries(countries.allCountries, preferredCodes);
+      }
+
+      scope.selectCountry = function (country) {
+        scope.selectedCountryCode = country.iso2;
+        scope.number = scope.ngModel = changeDialCode(scope.number, country.dialCode);
+      };
+
+      scope.isCountrySelected = function (country) {
+        return country.iso2 == scope.selectedCountryCode;
+      };
+
+      scope.resetCountry = function () {
+        var defaultCountryCode = scope.defaultCountryCode;
+
+        if (defaultCountryCode) {
+          scope.selectedCountryCode = defaultCountryCode;
+          scope.ngModel = '';
+          scope.number = '';
+        }
+      };
+
+      scope.$watch('number', function (newValue) {
+        if (scope.selectedCountryCode) {
+          var number = scope.number;
+          var dialCode = countries.getDialCode(getDigits(number));
+          scope.isValid = libphonenumber.isValidNumber(number, dialCode);
+        }
+      });
+
+      scope.$watch('number', function(newValue, oldValue) {
+        newValue = newValue || '';
+        oldValue = oldValue || '';
+
+        var digits = getDigits(newValue);
+        var countryCode = countries.getCountryCode(digits);
+
+        if (countryCode) {
+          var dialCode = countries.getDialCode(digits);
+          var number = formatNumberCarefully(dialCode, oldValue, newValue);
+
+          scope.selectedCountryCode = countryCode;
+          scope.ngModel = number;
+          scope.number = number;
+        }
+        else { scope.ngModel = newValue; }
+      });
+    }
+  };
+});
+
+module.exports = 'bcPhoneNumber';
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"../../build/js/templates":1,"./countries":3,"./libphonenumber":4}],3:[function(require,module,exports){
 'use strict';
 // Tell JSHint to ignore this warning: "character may get silently deleted by one or more browsers"
 // jshint -W100
@@ -1322,7 +1478,7 @@ module.exports = {
   countryCodes: countryCodes
 };
 
-},{"./trie":5}],3:[function(require,module,exports){
+},{"./trie":5}],4:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -1537,163 +1693,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],4:[function(require,module,exports){
-(function (global){
-'use strict';
-
-global.jQuery = (typeof window !== "undefined" ? window['jQuery'] : typeof global !== "undefined" ? global['jQuery'] : null);
-(typeof window !== "undefined" ? window['bootstrap'] : typeof global !== "undefined" ? global['bootstrap'] : null);
-
-var libphonenumber = require('./libphonenumber');
-var countries = require('./countries');
-var angular = (typeof window !== "undefined" ? window['angular'] : typeof global !== "undefined" ? global['angular'] : null);
-
-global.angular = angular;
-require('../../build/js/templates');
-
-angular.module('phoneNumber', ['phoneNumberTemplates'])
-.controller('MainCtrl', function () {
-
-  this.theNumber = '165';
-})
-.directive('phoneNumber', function () {
-
-  function hasPrefix (number) {
-    return (number[0] === '+');
-  }
-
-  function getPrefix (number) {
-    if (number && number[0] === '+') { return '+'; }
-    else                             { return '';  }
-  }
-
-  function getDigits (number) {
-    if (!number) { return ''; }
-    else {
-      var prefix = getPrefix(number);
-
-      if (prefix === '+')  { return number.substring(1).replace(/\W/g, ''); }
-      else                 { return number.replace(/\W/g, '');              }
-    }
-  }
-
-  function prefixNumber (number) {
-    if (number && !hasPrefix(number)) { return ('+' + number); }
-    else                              { return number;         }
-  }
-
-  function formatNumber (number, countryCode) {
-    return libphonenumber.formatNumber(number, countryCode);
-  }
-
-  function changeDialCode (number, newDialCode) {
-    if (!number) { return ('+' + newDialCode); }
-    else {
-      var digits = getDigits(number);
-      var oldDialCode = countries.getDialCode(digits);
-
-      if (oldDialCode) {
-        var numberWithNewDialCode = digits.replace(oldDialCode, newDialCode);
-        var prefixedNumber = ('+' + numberWithNewDialCode);
-        var formattedNumber = formatNumber(prefixedNumber, newDialCode);
-        return formattedNumber;
-      }
-      else { return number; }
-    }
-  }
-
-  function formatNumberCarefully (dialCode, oldValue, newValue) {
-    if (newValue.length >= oldValue.length) { return formatNumber(prefixNumber(newValue), dialCode); }
-    else                                    { return prefixNumber(newValue);                         }
-  }
-
-  function getPreferredCountries (allCountries, preferredCodes) {
-
-    return allCountries.filter(function (country) {
-
-      return preferredCodes.some(function (code) {
-
-        return country.iso2 == code;
-      });
-    }).map(function (country) {
-      return {
-        dialCode: country.dialCode,
-        name: country.name,
-        iso2: country.iso2
-      };
-    });
-  }
-
-  return {
-    templateUrl: 'src/html/phone-number.html',
-    scope: {
-      preferredCountriesCodes: '@preferredCountries',
-      defaultCountryCode: '@defaultCountry',
-      isValid: '=',
-      ngModel: '='
-    },
-    link: function (scope, element, attrs) {
-      scope.selectedCountryCode = scope.defaultCountryCode || 'us';
-      scope.allCountries = countries.allCountries;
-      scope.number = scope.ngModel;
-
-      if (scope.preferredCountriesCodes) {
-        var preferredCodes = scope.preferredCountriesCodes.split(' ');
-        scope.preferredCountries = getPreferredCountries(countries.allCountries, preferredCodes);
-      }
-
-      scope.selectCountry = function (country) {
-        scope.selectedCountryCode = country.iso2;
-        scope.number = scope.ngModel = changeDialCode(scope.number, country.dialCode);
-      };
-
-      scope.isCountrySelected = function (country) {
-        return country.iso2 == scope.selectedCountryCode;
-      };
-
-      scope.resetCountry = function () {
-        var defaultCountryCode = scope.defaultCountryCode;
-
-        if (defaultCountryCode) {
-          scope.selectedCountryCode = defaultCountryCode;
-          scope.ngModel = '';
-          scope.number = '';
-        }
-      };
-
-      scope.$watch('number', function (newValue) {
-        if (scope.selectedCountryCode) {
-          var number = scope.number;
-          var dialCode = countries.getDialCode(getDigits(number));
-          scope.isValid = libphonenumber.isValidNumber(number, dialCode);
-        }
-      });
-
-      scope.$watch('number', function(newValue, oldValue) {
-        newValue = newValue || '';
-        oldValue = oldValue || '';
-
-        var digits = getDigits(newValue);
-        var countryCode = countries.getCountryCode(digits);
-
-        if (countryCode) {
-          var dialCode = countries.getDialCode(digits);
-          var number = formatNumberCarefully(dialCode, oldValue, newValue);
-
-          scope.selectedCountryCode = countryCode;
-          scope.ngModel = number;
-          scope.number = number;
-        }
-        else { scope.ngModel = newValue; }
-      });
-    }
-  };
-});
-
-module.exports = 'phoneNumber';
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../build/js/templates":1,"./countries":2,"./libphonenumber":3}],5:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 function Node() {
@@ -1774,4 +1774,4 @@ Trie.prototype.longestPrefix = function (key) {
 
 module.exports = Trie;
 
-},{}]},{},[4]);
+},{}]},{},[2]);

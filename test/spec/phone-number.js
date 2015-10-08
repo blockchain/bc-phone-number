@@ -1,9 +1,9 @@
 'use strict';
 
-describe('Directive: phone-number', function () {
+describe('Directive: bc-phone-number', function () {
 
   // load the directive's module
-  beforeEach(module('phoneNumber'));
+  beforeEach(module('bcPhoneNumber'));
 
   var scope;
 
@@ -12,7 +12,7 @@ describe('Directive: phone-number', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    var element = angular.element('<phone-number></phone-number>');
+    var element = angular.element('<bc-phone-number></bc-phone-number>');
     element = $compile(element)(scope);
 
     scope.$digest();

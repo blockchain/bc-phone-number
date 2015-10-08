@@ -28,7 +28,7 @@ module.exports = function(config) {
       '../bower_components/google-libphonenumber/dist/browser/libphonenumber.js',
       '../bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      '../dist/js/phone-number.js',
+      '../dist/js/bc-phone-number.js',
 
       'spec/*.js'
     ],

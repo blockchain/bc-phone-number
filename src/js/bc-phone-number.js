@@ -10,12 +10,12 @@ var angular = require('angular');
 global.angular = angular;
 require('../../build/js/templates');
 
-angular.module('phoneNumber', ['phoneNumberTemplates'])
+angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
 .controller('MainCtrl', function () {
 
   this.theNumber = '165';
 })
-.directive('phoneNumber', function () {
+.directive('bcPhoneNumber', function () {
 
   function hasPrefix (number) {
     return (number[0] === '+');
@@ -84,7 +84,7 @@ angular.module('phoneNumber', ['phoneNumberTemplates'])
   }
 
   return {
-    templateUrl: 'src/html/phone-number.html',
+    templateUrl: 'bc-phone-number/bc-phone-number.html',
     scope: {
       preferredCountriesCodes: '@preferredCountries',
       defaultCountryCode: '@defaultCountry',
@@ -149,4 +149,4 @@ angular.module('phoneNumber', ['phoneNumberTemplates'])
   };
 });
 
-module.exports = 'phoneNumber';
+module.exports = 'bcPhoneNumber';
