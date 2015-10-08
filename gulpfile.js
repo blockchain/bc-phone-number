@@ -5,8 +5,10 @@ var gulp = require('gulp');
 var templateCache = require('gulp-angular-templatecache'),
     runSequence   = require('run-sequence'),
     changed       = require('gulp-changed'),
-    connect       = require('gulp-connect'),
     concat        = require('gulp-concat'),
+    connect       = require('gulp-connect'),
+    rename        = require('gulp-rename'),
+    uglify        = require('gulp-uglify'),
     exec          = require('gulp-exec'),
     scss          = require('gulp-scss');
 
@@ -32,6 +34,13 @@ function executeTask (command) {
     execute(command, callback);
   };
 }
+
+gulp.task('uglify:js', function () {
+  return gulp.src('dist/js/bc-phone-number.js')
+    .pipe(uglify())
+    .pipe(rename('bc-phone-number.min.js'))
+    .pipe(gulp.dest('dist/js/'));
+});
 
 gulp.task('wiredep', function () {
   var index = gulp.src('index.html')
@@ -112,7 +121,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build:js', function (callback) {
-  runSequence('inline-templates', 'browserify', callback);
+  runSequence('inline-templates', 'browserify', 'uglify:js', callback);
 });
 
 gulp.task('build', function (callback) {
