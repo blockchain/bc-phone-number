@@ -1,4 +1,4 @@
-# bc-phone-number [![Build Status](https://travis-ci.org/Ahimta/bc-phone-number.svg?branch=master)](https://travis-ci.org/Ahimta/bc-bc-phone-number)
+# bc-phone-number [![Build Status](https://travis-ci.org/Ahimta/bc-phone-number.svg?branch=master)](https://travis-ci.org/Ahimta/bc-phone-number)
 
 ## Usage
 ```js
