@@ -2,5 +2,5 @@ bower_components/
 .gulp-scss-cache/
 node_modules/
 .sass-cache/
+gh-pages/
 build/
-dist/

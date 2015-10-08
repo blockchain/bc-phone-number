@@ -5,11 +5,20 @@
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <title>Phone Number Demo</title>
 
-  <link rel='stylesheet' href='node_modules/bootstrap/dist/css/bootstrap.css' />
-  <link rel='stylesheet' href='build/css/main.css'>
-  <link rel='stylesheet' href='build/css/sprite.css'>
+  <!-- bower:css -->
+  <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+  <!-- endbower -->
 
-  <script src='build/js/bundle.js'></script>
+  <!-- bower:js -->
+  <script src='bower_components/jquery/dist/jquery.js'></script>
+  <script src='bower_components/angular/angular.js'></script>
+  <script src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
+  <script src='bower_components/google-libphonenumber/dist/browser/libphonenumber.js'></script>
+  <!-- endbower -->
+
+  <link rel='stylesheet' href='dist/css/phone-number.css'>
+
+  <script src='dist/js/phone-number.js'></script>
 </head>
 <body ng-controller='MainCtrl as vm'>
   <div class='container'>

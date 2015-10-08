@@ -4,7 +4,6 @@ describe('Directive: phone-number', function () {
 
   // load the directive's module
   beforeEach(module('phoneNumber'));
-  beforeEach(module('templates'));
 
   var scope;
 

@@ -7,7 +7,10 @@ var libphonenumber = require('./libphonenumber');
 var countries = require('./countries');
 var angular = require('angular');
 
-angular.module('phoneNumber', [])
+global.angular = angular;
+require('../../build/js/templates');
+
+angular.module('phoneNumber', ['phoneNumberTemplates'])
 .controller('MainCtrl', function () {
 
   this.theNumber = '165';

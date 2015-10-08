@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     responsive_images: {
       retina: {
         options: {
-          engine: "im",
+          engine: 'im',
           sizes: [{
             width: 40,
             height: 30
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: "lib/region-flags/png/",
+          cwd: 'lib/region-flags/png/',
           src: ['*.png'],
           dest: 'build/img/flags/@2x/'
         }]
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     sprite: {
       retina: {
           src: 'build/img/flags/*@2x.png',
-          dest: 'build/img/flags@2x.png',
+          dest: 'dist/img/flags@2x.png',
           destCss: 'build/css/sprite@2x.scss',
           cssTemplate: function() { return ''; },
           padding: 4,
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
       },
       main: {
         src: ['build/img/flags/*.png', '!<%= sprite.retina.src %>'],
-        dest: 'build/img/flags.png',
+        dest: 'dist/img/flags.png',
         cssTemplate: 'src/css/sprite-retina-mustache.scss',
         destCss: 'build/css/sprite.scss',
         padding: 2, // this is currently just for chrome, otherwise flags seem to leak into each other
@@ -74,11 +74,20 @@ module.exports = function(grunt) {
           variableNameTransforms: ['toLowerCase']
         }
       }
+    },
+    browserify: {
+      dist: {
+        files: {'dist/js/phone-number.js': ['src/js/phone-number.js']},
+        options: {
+          browserifyOptions: {bundleExternal: false}
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.loadNpmTasks('grunt-spritesmith');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-retinafy');
   grunt.loadNpmTasks('grunt-exec');
 

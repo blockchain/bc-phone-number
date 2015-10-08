@@ -1,20 +1,51 @@
 {
   "name": "phone-number",
-  "main": "src/js/phone-number.js",
+  "main": [
+    "dist/css/phone-number.css",
+    "dist/js/phone-number.js",
+    "dist/img/flags@2x.png",
+    "dist/img/flags.png"
+  ],
   "version": "0.0.0",
-  "authors": ["Abdullah Alansari <ahimta@gmail.com>"],
+  "authors": [
+    "Abdullah Alansari <ahimta@gmail.com>"
+  ],
   "description": "An AngularJS international phone input",
-  "moduleType": ["amd", "globals", "node"],
-  "keywords": ["angularjs"],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "angularjs"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/Ahimta/phone-number",
-  "repository": {"url": "git://github.com/Ahimta/phone-number.git"},
-  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
+  "repository": {
+    "url": "git://github.com/Ahimta/phone-number.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
     "angular": "~1.4.7",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "google-libphonenumber": "~1.0.5"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.7"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
   }
 }
