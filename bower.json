@@ -1,7 +1,7 @@
 {
   "name": "bc-phone-number",
   "main": "dist/js/bc-phone-number.js",
-  "version": "0.0.3-0",
+  "version": "1.0.0",
   "authors": [
     "Abdullah Alansari <ahimta@gmail.com>"
   ],
