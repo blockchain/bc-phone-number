@@ -1,23 +1,22 @@
 {
   "name": "bc-phone-number",
-  "main": [
-    "dist/css/bc-phone-number.css",
-    "dist/js/bc-phone-number.js",
-    "dist/img/flags@2x.png",
-    "dist/img/flags.png"
-  ],
+  "main": "dist/js/bc-phone-number.js",
   "version": "0.0.3-0",
   "authors": [
     "Abdullah Alansari <ahimta@gmail.com>"
   ],
-  "description": "An AngularJS international phone input",
+  "description": "An AngularJS international phone input directive",
   "moduleType": [
     "amd",
     "globals",
     "node"
   ],
   "keywords": [
-    "angularjs"
+    "international",
+    "countries",
+    "angularjs",
+    "directive",
+    "phone"
   ],
   "license": "MIT",
   "homepage": "https://github.com/Ahimta/bc-phone-number",
@@ -34,7 +33,8 @@
   "dependencies": {
     "angular": "~1.4.7",
     "bootstrap": "~3.3.5",
-    "google-libphonenumber": "~1.0.5"
+    "google-libphonenumber": "~1.0.5",
+    "bc-css-flags": "~3.0.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.7"

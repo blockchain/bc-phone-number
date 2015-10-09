@@ -6,7 +6,6 @@ node_js:
   - '4.0'
   - '4.1'
 before_script:
-  - npm install -g bower grunt-cli gulp karma-cli evenizer browserify watchify
-  - gem install sass
+  - npm install -g bower grunt-cli gulp karma-cli browserify watchify
   - bower install
 script: 'gulp build && gulp test'
