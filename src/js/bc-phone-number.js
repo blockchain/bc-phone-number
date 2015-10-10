@@ -4,7 +4,7 @@ global.jQuery = require('jquery');
 require('bootstrap');
 
 var libphonenumber = require('./libphonenumber');
-var countries = require('./countries');
+var bcCountries = require('bc-countries');
 var angular = require('angular');
 
 global.angular = angular;
@@ -49,11 +49,11 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
     if (!number) { return ('+' + newDialCode); }
     else {
       var digits = getDigits(number);
-      var oldDialCode = countries.getDialCode(digits);
+      var oldDialCode = bcCountries.getDialCodeByDigits(digits);
 
       if (oldDialCode) {
         var numberWithNewDialCode = digits.replace(oldDialCode, newDialCode);
-        var prefixedNumber = ('+' + numberWithNewDialCode);
+        var prefixedNumber = prefixNumber(numberWithNewDialCode);
         var formattedNumber = formatNumber(prefixedNumber, newDialCode);
         return formattedNumber;
       }
@@ -66,21 +66,15 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
     else                                    { return prefixNumber(newValue);                         }
   }
 
-  function getPreferredCountries (allCountries, preferredCodes) {
+  function getPreferredCountries (preferredCodes) {
+    var preferredCountries = [];
 
-    return allCountries.filter(function (country) {
+    for (var i = 0; i < preferredCodes.length; i++) {
+      var country = bcCountries.getCountryByIso2Code(preferredCodes[i]);
+      if (country) { preferredCountries.push(country); }
+    }
 
-      return preferredCodes.some(function (code) {
-
-        return country.iso2 == code;
-      });
-    }).map(function (country) {
-      return {
-        dialCode: country.dialCode,
-        name: country.name,
-        iso2: country.iso2
-      };
-    });
+    return preferredCountries;
   }
 
   return {
@@ -92,38 +86,38 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
       ngModel: '='
     },
     link: function (scope, element, attrs) {
-      scope.selectedCountryCode = scope.defaultCountryCode || 'us';
-      scope.allCountries = countries.allCountries;
+      scope.selectedCountry = bcCountries.getCountryByIso2Code(scope.defaultCountryCode || 'us');
+      scope.allCountries = bcCountries.getAllCountries();
       scope.number = scope.ngModel;
 
       if (scope.preferredCountriesCodes) {
         var preferredCodes = scope.preferredCountriesCodes.split(' ');
-        scope.preferredCountries = getPreferredCountries(countries.allCountries, preferredCodes);
+        scope.preferredCountries = getPreferredCountries(preferredCodes);
       }
 
       scope.selectCountry = function (country) {
-        scope.selectedCountryCode = country.iso2;
+        scope.selectedCountry = country;
         scope.number = scope.ngModel = changeDialCode(scope.number, country.dialCode);
       };
 
       scope.isCountrySelected = function (country) {
-        return country.iso2 == scope.selectedCountryCode;
+        return country.iso2Code == scope.selectedCountry.iso2Code;
       };
 
       scope.resetCountry = function () {
         var defaultCountryCode = scope.defaultCountryCode;
 
         if (defaultCountryCode) {
-          scope.selectedCountryCode = defaultCountryCode;
+          scope.selectedCountry = bcCountries.getCountryByIso2Code(defaultCountryCode);
           scope.ngModel = '';
           scope.number = '';
         }
       };
 
       scope.$watch('number', function (newValue) {
-        if (scope.selectedCountryCode) {
+        if (scope.selectedCountry) {
           var number = scope.number;
-          var dialCode = countries.getDialCode(getDigits(number));
+          var dialCode = bcCountries.getDialCodeByDigits(getDigits(number));
           scope.isValid = libphonenumber.isValidNumber(number, dialCode);
         }
       });
@@ -133,13 +127,16 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
         oldValue = oldValue || '';
 
         var digits = getDigits(newValue);
-        var countryCode = countries.getCountryCode(digits);
+        var countryCode = bcCountries.getIso2CodeByDigits(digits);
 
         if (countryCode) {
-          var dialCode = countries.getDialCode(digits);
+          var dialCode = bcCountries.getDialCodeByDigits(digits);
           var number = formatNumberCarefully(dialCode, oldValue, newValue);
 
-          scope.selectedCountryCode = countryCode;
+          if (dialCode !== scope.selectedCountry.dialCode) {
+            scope.selectedCountry = bcCountries.getCountryByIso2Code(countryCode);
+          }
+
           scope.ngModel = number;
           scope.number = number;
         }
