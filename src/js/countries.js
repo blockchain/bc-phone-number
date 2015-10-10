@@ -1286,7 +1286,7 @@ var allCountries = [
   ]
 ];
 
-var Trie = require('./trie');
+var Trie = require('digits-trie');
 
 var countryCodes = new Trie();
 
@@ -1301,15 +1301,15 @@ for (var i = 0; i < allCountries.length; i++) {
     areaCodes: c[4] || null
   };
 
-  countryCodes.put(""+c[2], c[1]);
+  countryCodes.set(""+c[2], c[1]);
 }
 
 function getCountryCode (digits) {
-  return countryCodes.longestPrefix(digits).value;
+  return countryCodes.longestMatchingPrefix(digits).value;
 }
 
 function getDialCode (digits) {
-  return countryCodes.longestPrefix(digits).key;
+  return countryCodes.longestMatchingPrefix(digits).key;
 }
 
 module.exports = {

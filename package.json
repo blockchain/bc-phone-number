@@ -24,6 +24,7 @@
     "angular": "^1.4.7",
     "bc-css-flags": "^3.0.0",
     "bootstrap": "^3.3.5",
+    "digits-trie": "^1.0.0",
     "google-libphonenumber": "^1.0.6",
     "jquery": "^2.1.4"
   },
@@ -64,7 +65,8 @@
     "jquery": "global:jQuery",
     "angular": "global:angular",
     "bootstrap": "global:bootstrap",
-    "google-libphonenumber": "global:libphonenumber"
+    "google-libphonenumber": "global:libphonenumber",
+    "digits-trie": "global:DigitsTrie"
   },
   "browserify": {
     "transform": [

@@ -157,6 +157,7 @@ module.exports = 'bcPhoneNumber';
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../../build/js/templates":1,"./countries":3,"./libphonenumber":4}],3:[function(require,module,exports){
+(function (global){
 'use strict';
 // Tell JSHint to ignore this warning: "character may get silently deleted by one or more browsers"
 // jshint -W100
@@ -1445,7 +1446,7 @@ var allCountries = [
   ]
 ];
 
-var Trie = require('./trie');
+var Trie = (typeof window !== "undefined" ? window['DigitsTrie'] : typeof global !== "undefined" ? global['DigitsTrie'] : null);
 
 var countryCodes = new Trie();
 
@@ -1460,15 +1461,15 @@ for (var i = 0; i < allCountries.length; i++) {
     areaCodes: c[4] || null
   };
 
-  countryCodes.put(""+c[2], c[1]);
+  countryCodes.set(""+c[2], c[1]);
 }
 
 function getCountryCode (digits) {
-  return countryCodes.longestPrefix(digits).value;
+  return countryCodes.longestMatchingPrefix(digits).value;
 }
 
 function getDialCode (digits) {
-  return countryCodes.longestPrefix(digits).key;
+  return countryCodes.longestMatchingPrefix(digits).key;
 }
 
 module.exports = {
@@ -1478,7 +1479,8 @@ module.exports = {
   countryCodes: countryCodes
 };
 
-},{"./trie":5}],4:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],4:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -1693,85 +1695,4 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],5:[function(require,module,exports){
-'use strict';
-
-function Node() {
-  this.children = new Array(9);
-}
-
-var Nil = new Node();
-Nil.isNil = true;
-Nil.value = '';
-Nil.key = '';
-
-Node.prototype.getChild = function(i) {
-  if      (i < 0 || i > 9)   { throw new Error('-_-');               }
-  else if (this.children[i]) { return this.children[i];              }
-  else                       { return this.children[i] = new Node(); }
-}
-
-function Trie () {
-  this.root = new Node();
-}
-
-Trie.prototype.put = function (key, value) {
-
-  if (!key || key.length < 1) { return; }
-  else {
-    var node = this.root;
-
-    for (var i = 0; i < key.length - 1; i++) {
-      var character = key[i];
-      var index = parseInt(character);
-      node = node.getChild(index);
-    }
-
-    var newNode = node.getChild(parseInt(key[key.length-1]));
-    newNode.value = value;
-    newNode.key = key;
-  }
-}
-
-Trie.prototype.get = function (key) {
-
-  if (!key || key.length < 1) { return Nil; }
-  else {
-    var node = this.root;
-
-    for (var i = 0; node && i < key.length; i++) {
-      var character = key[i];
-      var index = parseInt(character);
-
-      node = node.children[index];
-    }
-
-    if (node && node.value) { return node; }
-    else                    { return Nil;  }
-  }
-}
-
-Trie.prototype.longestPrefix = function (key) {
-
-  if (!key || key.length < 1) { return Nil; }
-  else {
-    var prevNode = null;
-    var node = this.root;
-
-    for (var i = 0; node && i < key.length; i++) {
-      var character = key[i];
-      var index = parseInt(character);
-
-      if (node.value) { prevNode = node };
-      node = node.children[index];
-    }
-
-    if      (node && node.value)         { return node;     }
-    else if (prevNode && prevNode.value) { return prevNode; }
-    else                                 { return Nil;      }
-  }
-}
-
-module.exports = Trie;
-
 },{}]},{},[2]);
