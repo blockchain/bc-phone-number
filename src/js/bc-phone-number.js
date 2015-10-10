@@ -21,19 +21,9 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
     return (number[0] === '+');
   }
 
-  function getPrefix (number) {
-    if (number && number[0] === '+') { return '+'; }
-    else                             { return '';  }
-  }
-
   function getDigits (number) {
-    if (!number) { return ''; }
-    else {
-      var prefix = getPrefix(number);
-
-      if (prefix === '+')  { return number.substring(1).replace(/\W/g, ''); }
-      else                 { return number.replace(/\W/g, '');              }
-    }
+    if (!number) { return '';                        }
+    else         { return number.replace(/\W/g, ''); }
   }
 
   function prefixNumber (number) {
