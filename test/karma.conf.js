@@ -25,8 +25,8 @@ module.exports = function(config) {
       '../bower_components/jquery/dist/jquery.js',
       '../bower_components/angular/angular.js',
       '../bower_components/bootstrap/dist/js/bootstrap.js',
-      '../bower_components/google-libphonenumber/dist/browser/libphonenumber.js',
       '../bower_components/digits-trie/dist/digits-trie.js',
+      '../bower_components/google-libphonenumber/dist/browser/libphonenumber.js',
       '../bower_components/bc-countries/dist/bc-countries.js',
       '../bower_components/angular-mocks/angular-mocks.js',
       // endbower

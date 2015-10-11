@@ -22,10 +22,9 @@
   "license": "MIT",
   "dependencies": {
     "angular": "^1.4.7",
-    "bc-countries": "^1.0.0",
+    "bc-countries": "^2.0.0",
     "bc-css-flags": "^3.0.0",
     "bootstrap": "^3.3.5",
-    "google-libphonenumber": "^1.0.6",
     "jquery": "^2.1.4"
   },
   "devDependencies": {

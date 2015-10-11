@@ -3,7 +3,6 @@
 global.jQuery = require('jquery');
 require('bootstrap');
 
-var libphonenumber = require('./libphonenumber');
 var bcCountries = require('bc-countries');
 var angular = require('angular');
 
@@ -16,45 +15,6 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
   this.theNumber = '165';
 })
 .directive('bcPhoneNumber', function () {
-
-  function hasPrefix (number) {
-    return (number[0] === '+');
-  }
-
-  function getDigits (number) {
-    if (!number) { return '';                        }
-    else         { return number.replace(/\W/g, ''); }
-  }
-
-  function prefixNumber (number) {
-    if (number && !hasPrefix(number)) { return ('+' + number); }
-    else                              { return number;         }
-  }
-
-  function formatNumber (number, countryCode) {
-    return libphonenumber.formatNumber(number, countryCode);
-  }
-
-  function changeDialCode (number, newDialCode) {
-    if (!number) { return ('+' + newDialCode); }
-    else {
-      var digits = getDigits(number);
-      var oldDialCode = bcCountries.getDialCodeByDigits(digits);
-
-      if (oldDialCode) {
-        var numberWithNewDialCode = digits.replace(oldDialCode, newDialCode);
-        var prefixedNumber = prefixNumber(numberWithNewDialCode);
-        var formattedNumber = formatNumber(prefixedNumber, newDialCode);
-        return formattedNumber;
-      }
-      else { return number; }
-    }
-  }
-
-  function formatNumberCarefully (dialCode, oldValue, newValue) {
-    if (newValue.length >= oldValue.length) { return formatNumber(prefixNumber(newValue), dialCode); }
-    else                                    { return prefixNumber(newValue);                         }
-  }
 
   function getPreferredCountries (preferredCodes) {
     var preferredCountries = [];
@@ -87,7 +47,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
 
       scope.selectCountry = function (country) {
         scope.selectedCountry = country;
-        scope.number = scope.ngModel = changeDialCode(scope.number, country.dialCode);
+        scope.number = scope.ngModel = bcCountries.changeDialCode(scope.number, country.dialCode);
       };
 
       scope.isCountrySelected = function (country) {
@@ -105,32 +65,28 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
       };
 
       scope.$watch('number', function (newValue) {
-        if (scope.selectedCountry) {
-          var number = scope.number;
-          var dialCode = bcCountries.getDialCodeByDigits(getDigits(number));
-          scope.isValid = libphonenumber.isValidNumber(number, dialCode);
-        }
+        scope.isValid = bcCountries.isValidNumber(newValue);
       });
 
-      scope.$watch('number', function(newValue, oldValue) {
-        newValue = newValue || '';
-        oldValue = oldValue || '';
+      scope.$watch('number', function(newValue) {
+        if (newValue === '') { scope.ngModel = ''; }
+        else if (newValue) {
+          var digits = bcCountries.getDigits(newValue);
+          var countryCode = bcCountries.getIso2CodeByDigits(digits);
 
-        var digits = getDigits(newValue);
-        var countryCode = bcCountries.getIso2CodeByDigits(digits);
+          if (countryCode) {
+            var dialCode = bcCountries.getDialCodeByDigits(digits);
+            var number = bcCountries.formatNumber(newValue);
 
-        if (countryCode) {
-          var dialCode = bcCountries.getDialCodeByDigits(digits);
-          var number = formatNumberCarefully(dialCode, oldValue, newValue);
+            if (dialCode !== scope.selectedCountry.dialCode) {
+              scope.selectedCountry = bcCountries.getCountryByIso2Code(countryCode);
+            }
 
-          if (dialCode !== scope.selectedCountry.dialCode) {
-            scope.selectedCountry = bcCountries.getCountryByIso2Code(countryCode);
+            scope.ngModel = number;
+            scope.number = number;
           }
-
-          scope.ngModel = number;
-          scope.number = number;
+          else { scope.ngModel = newValue; }
         }
-        else { scope.ngModel = newValue; }
       });
     }
   };
