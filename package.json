@@ -2,7 +2,7 @@
   "name": "bc-phone-number",
   "version": "4.0.0",
   "description": "An AngularJS international phone input directive",
-  "main": "src/js/bc-phone-number.js",
+  "main": "src/bc-phone-number.js",
   "scripts": {
     "test": "gulp test"
   },
@@ -35,11 +35,13 @@
     "grunt": "^0.4.5",
     "grunt-browserify": "^4.0.1",
     "grunt-bump": "^0.6.0",
+    "grunt-karma": "^0.12.1",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.7.0",
     "gulp-changed": "^1.3.0",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "^2.2.0",
+    "gulp-minify-css": "^1.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.4.1",
     "jasmine-core": "^2.3.4",

@@ -33,7 +33,7 @@ module.exports = function(config) {
 
       '../dist/js/bc-phone-number.js',
 
-      'spec/*.js'
+      'bc-phone-number.js'
     ],
 
     // list of files / patterns to exclude

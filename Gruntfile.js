@@ -6,10 +6,19 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     browserify: {
       dist: {
-        files: {'dist/js/bc-phone-number.js': ['src/js/bc-phone-number.js']},
+        files: {'dist/js/bc-phone-number.js': ['src/bc-phone-number.js']},
         options: {
           browserifyOptions: {bundleExternal: false}
         }
+      }
+    },
+    karma: {
+      options: {configFile: 'test/karma.conf.js'},
+      unit: {
+        browsers: ['PhantomJS']
+      },
+      e2e: {
+        browsers: ['Chrome']
       }
     },
     bump: {
@@ -28,5 +37,6 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-bump');
 };

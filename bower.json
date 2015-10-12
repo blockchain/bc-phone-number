@@ -1,6 +1,9 @@
 {
   "name": "bc-phone-number",
-  "main": "dist/js/bc-phone-number.js",
+  "main": [
+    "dist/css/bc-phone-number.css",
+    "dist/js/bc-phone-number.js"
+  ],
   "version": "4.0.0",
   "authors": [
     "Abdullah Alansari <ahimta@gmail.com>"
