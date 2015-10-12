@@ -1,0 +1,6 @@
+{
+	"preset": "google",
+	"maximumLineLength": 120,
+	"disallowKeywordsOnNewLine": null,
+  "validateIndentation": 2
+}

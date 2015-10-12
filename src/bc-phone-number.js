@@ -9,9 +9,9 @@ var angular = require('angular');
 global.angular = angular;
 require('../build/js/templates');
 
-angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNumber', function () {
+angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNumber', function() {
 
-  function getPreferredCountries (preferredCodes) {
+  function getPreferredCountries(preferredCodes) {
     var preferredCountries = [];
 
     for (var i = 0; i < preferredCodes.length; i++) {
@@ -30,7 +30,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNu
       isValid: '=',
       ngModel: '='
     },
-    link: function (scope, element, attrs) {
+    link: function(scope, element, attrs) {
       scope.selectedCountry = bcCountries.getCountryByIso2Code(scope.defaultCountryCode || 'us');
       scope.allCountries = bcCountries.getAllCountries();
       scope.number = scope.ngModel;
@@ -40,16 +40,16 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNu
         scope.preferredCountries = getPreferredCountries(preferredCodes);
       }
 
-      scope.selectCountry = function (country) {
+      scope.selectCountry = function(country) {
         scope.selectedCountry = country;
         scope.number = scope.ngModel = bcCountries.changeDialCode(scope.number, country.dialCode);
       };
 
-      scope.isCountrySelected = function (country) {
+      scope.isCountrySelected = function(country) {
         return country.iso2Code == scope.selectedCountry.iso2Code;
       };
 
-      scope.resetCountry = function () {
+      scope.resetCountry = function() {
         var defaultCountryCode = scope.defaultCountryCode;
 
         if (defaultCountryCode) {
@@ -59,7 +59,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNu
         }
       };
 
-      scope.$watch('number', function (newValue) {
+      scope.$watch('number', function(newValue) {
         scope.isValid = bcCountries.isValidNumber(newValue);
       });
 
