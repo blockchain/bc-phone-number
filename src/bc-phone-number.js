@@ -9,12 +9,7 @@ var angular = require('angular');
 global.angular = angular;
 require('../build/js/templates');
 
-angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
-.controller('MainCtrl', function () {
-
-  this.theNumber = '165';
-})
-.directive('bcPhoneNumber', function () {
+angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNumber', function () {
 
   function getPreferredCountries (preferredCodes) {
     var preferredCountries = [];

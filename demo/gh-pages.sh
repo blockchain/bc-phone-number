@@ -8,7 +8,8 @@ mkdir gh-pages
 cp -r bower_components/ gh-pages/bower_components/
 cp -r dist/ gh-pages/dist/
 
-cp index.html gh-pages/
+cp demo/index.html gh-pages/
+cp demo/demo.js gh-pages/
 
 git add --force --all gh-pages
 

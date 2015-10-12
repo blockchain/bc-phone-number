@@ -17,7 +17,7 @@ var childProcess = require('child_process'),
     del          = require('del');
 
 var GLOBS = {
-  assets: '{index.html,src/*.{html,js}}'
+  assets: '{demo/index.html,src/*.{html,css,js}}'
 };
 
 function execute (command, callback) {
@@ -36,17 +36,17 @@ function executeTask (command) {
 
 gulp.task('browserify', executeTask('grunt browserify'));
 
-gulp.task('test', executeTask('grunt karma:unit'));
+gulp.task('deploy', executeTask('sh demo/gh-pages.sh'));
 
-gulp.task('deploy', executeTask('sh gh-pages.sh'));
+gulp.task('test', executeTask('grunt karma:unit'));
 
 gulp.task('server:connect', function () {
   connect.server({
     livereload: true,
-    fallback: 'index.html',
+    fallback: 'demo/index.html',
     host: 'localhost',
     port: 8080,
-    root: '.'
+    root: ['demo/', '.']
   });
 });
 
@@ -76,14 +76,12 @@ gulp.task('uglify', function () {
 });
 
 gulp.task('wiredep', function () {
-  var index = gulp.src('index.html')
-    .pipe(wiredep())
-    .pipe(gulp.dest('.'));
+  var index = gulp.src('demo/index.html')
+    .pipe(wiredep({ignorePath: '../'}))
+    .pipe(gulp.dest('demo/'));
 
   var test = gulp.src('test/karma.conf.js')
-    .pipe(wiredep({
-      devDependencies: true,
-    }))
+    .pipe(wiredep({devDependencies: true}))
     .pipe(gulp.dest('test/'));
 
   return merge(index, test);

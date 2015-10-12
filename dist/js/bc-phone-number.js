@@ -13,12 +13,7 @@ var angular = (typeof window !== "undefined" ? window['angular'] : typeof global
 global.angular = angular;
 require('../build/js/templates');
 
-angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates'])
-.controller('MainCtrl', function () {
-
-  this.theNumber = '165';
-})
-.directive('bcPhoneNumber', function () {
+angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNumber', function () {
 
   function getPreferredCountries (preferredCodes) {
     var preferredCountries = [];
