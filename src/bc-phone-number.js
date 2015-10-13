@@ -24,13 +24,14 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNu
 
   return {
     templateUrl: 'bc-phone-number/bc-phone-number.html',
+    require: 'ngModel',
     scope: {
       preferredCountriesCodes: '@preferredCountries',
       defaultCountryCode: '@defaultCountry',
       isValid: '=',
       ngModel: '='
     },
-    link: function(scope, element, attrs) {
+    link: function(scope, element, attrs, ctrl) {
       scope.selectedCountry = bcCountries.getCountryByIso2Code(scope.defaultCountryCode || 'us');
       scope.allCountries = bcCountries.getAllCountries();
       scope.number = scope.ngModel;
@@ -60,6 +61,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNu
       };
 
       scope.$watch('number', function(newValue) {
+        ctrl.$setValidity('phoneNumber', bcCountries.isValidNumber(newValue));
         scope.isValid = bcCountries.isValidNumber(newValue);
       });
 

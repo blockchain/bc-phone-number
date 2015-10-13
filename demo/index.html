@@ -26,10 +26,12 @@
 <body ng-controller='MainCtrl as vm'>
   <div class='container'>
     <h1>Phone Number Demo</h1>
-    <bc-phone-number ng-model='vm.theNumber' default-country='us' preferred-countries='us gb ca' is-valid='vm.isValid'>
-    </bc-phone-number>
-    <p>Is valid: <span ng-bind='vm.isValid'></span></p>
-    <p>Number: <span ng-bind='vm.theNumber'></span></p>
+    <form name='myForm'>
+      <bc-phone-number name='number' ng-model='vm.theNumber' default-country='us' preferred-countries='us gb ca'>
+      </bc-phone-number>
+      <p>Is valid: <span ng-bind='myForm.number.$valid'></span></p>
+      <p>Number: <span ng-bind='vm.theNumber'></span></p>
+    </form>
   </div>
 </body>
 </html>
