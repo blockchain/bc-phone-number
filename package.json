@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "angular": "^1.4.7",
+    "angular-ui-bootstrap": "^0.14.1",
     "bc-countries": "^2.0.0",
     "bc-css-flags": "^3.0.0",
     "bootstrap": "^3.3.5",
@@ -66,7 +67,6 @@
   "browserify-shim": {
     "jquery": "global:jQuery",
     "angular": "global:angular",
-    "bootstrap": "global:bootstrap",
     "google-libphonenumber": "global:libphonenumber",
     "digits-trie": "global:DigitsTrie",
     "bc-countries": "global:bcCountries"

@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       dist: {
         files: {'dist/js/bc-phone-number.js': ['src/bc-phone-number.js']},
         options: {
-          browserifyOptions: {bundleExternal: false}
+          browserifyOptions: {bundleExternal: false, standalone: 'bcPhoneNumber'}
         }
       }
     },

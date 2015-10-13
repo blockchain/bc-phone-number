@@ -1,16 +1,15 @@
 <section class="input-group">
-  <div class="input-group-btn">
+  <div class="input-group-btn" uib-dropdown uib-keyboard-nav>
     <button type="button" class="btn btn-default" type="button" ng-click="resetCountry()">
       <span class="glyphicon iti-flag" ng-class="selectedCountry.iso2Code"></span>
     </button>
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+    <button type="button" class="btn btn-default" uib-dropdown-toggle>
       <span class="caret"></span>
       <span class="sr-only">Toggle Dropdown</span>
     </button>
-    <ul class="dropdown-menu bc-phone-number-dropdown-menu">
+    <ul class="uib-dropdown-menu bc-phone-number-dropdown-menu" role="menu">
       <li ng-repeat="country in preferredCountries" ng-click="selectCountry(country)"
-          ng-class="{active: isCountrySelected(country)}">
+          ng-class="{active: isCountrySelected(country)}" role="menuitem">
         <a href="#" target="_self" class="bc-phone-number-country-anchor">
           <i class="glyphicon iti-flag bc-phone-number-country-icon" ng-class="country.iso2Code"></i>
           <span ng-bind="country.name"></span>
@@ -18,7 +17,7 @@
       </li>
       <li role="separator" class="divider" ng-show="preferredCountries && preferredCountries.length"></li>
       <li ng-repeat="country in allCountries" ng-click="selectCountry(country)"
-          ng-class="{active: isCountrySelected(country)}">
+          ng-class="{active: isCountrySelected(country)}" role="menuitem">
         <a href="#" target="_self" class="bc-phone-number-country-anchor">
           <i class="glyphicon iti-flag bc-phone-number-country-icon" ng-class="country.iso2Code"></i>
           <span ng-bind="country.name"></span>

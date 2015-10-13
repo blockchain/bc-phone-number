@@ -1,11 +1,8 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-angular.module("bcPhoneNumberTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("bc-phone-number/bc-phone-number.html","<section class=\"input-group\">\n  <div class=\"input-group-btn\">\n    <button type=\"button\" class=\"btn btn-default\" type=\"button\" ng-click=\"resetCountry()\">\n      <span class=\"glyphicon iti-flag\" ng-class=\"selectedCountry.iso2Code\"></span>\n    </button>\n    <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\"\n            aria-expanded=\"false\">\n      <span class=\"caret\"></span>\n      <span class=\"sr-only\">Toggle Dropdown</span>\n    </button>\n    <ul class=\"dropdown-menu bc-phone-number-dropdown-menu\">\n      <li ng-repeat=\"country in preferredCountries\" ng-click=\"selectCountry(country)\"\n          ng-class=\"{active: isCountrySelected(country)}\">\n        <a href=\"#\" target=\"_self\" class=\"bc-phone-number-country-anchor\">\n          <i class=\"glyphicon iti-flag bc-phone-number-country-icon\" ng-class=\"country.iso2Code\"></i>\n          <span ng-bind=\"country.name\"></span>\n        </a>\n      </li>\n      <li role=\"separator\" class=\"divider\" ng-show=\"preferredCountries && preferredCountries.length\"></li>\n      <li ng-repeat=\"country in allCountries\" ng-click=\"selectCountry(country)\"\n          ng-class=\"{active: isCountrySelected(country)}\">\n        <a href=\"#\" target=\"_self\" class=\"bc-phone-number-country-anchor\">\n          <i class=\"glyphicon iti-flag bc-phone-number-country-icon\" ng-class=\"country.iso2Code\"></i>\n          <span ng-bind=\"country.name\"></span>\n        </a>\n      </li>\n    </ul>\n  </div>\n  <input type=\"tel\" class=\"form-control\" ng-model=\"number\"/>\n</section>\n");}]);
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.bcPhoneNumber = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+angular.module("bcPhoneNumberTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("bc-phone-number/bc-phone-number.html","<section class=\"input-group\">\n  <div class=\"input-group-btn\" uib-dropdown uib-keyboard-nav>\n    <button type=\"button\" class=\"btn btn-default\" type=\"button\" ng-click=\"resetCountry()\">\n      <span class=\"glyphicon iti-flag\" ng-class=\"selectedCountry.iso2Code\"></span>\n    </button>\n    <button type=\"button\" class=\"btn btn-default\" uib-dropdown-toggle>\n      <span class=\"caret\"></span>\n      <span class=\"sr-only\">Toggle Dropdown</span>\n    </button>\n    <ul class=\"uib-dropdown-menu bc-phone-number-dropdown-menu\" role=\"menu\">\n      <li ng-repeat=\"country in preferredCountries\" ng-click=\"selectCountry(country)\"\n          ng-class=\"{active: isCountrySelected(country)}\" role=\"menuitem\">\n        <a href=\"#\" target=\"_self\" class=\"bc-phone-number-country-anchor\">\n          <i class=\"glyphicon iti-flag bc-phone-number-country-icon\" ng-class=\"country.iso2Code\"></i>\n          <span ng-bind=\"country.name\"></span>\n        </a>\n      </li>\n      <li role=\"separator\" class=\"divider\" ng-show=\"preferredCountries && preferredCountries.length\"></li>\n      <li ng-repeat=\"country in allCountries\" ng-click=\"selectCountry(country)\"\n          ng-class=\"{active: isCountrySelected(country)}\" role=\"menuitem\">\n        <a href=\"#\" target=\"_self\" class=\"bc-phone-number-country-anchor\">\n          <i class=\"glyphicon iti-flag bc-phone-number-country-icon\" ng-class=\"country.iso2Code\"></i>\n          <span ng-bind=\"country.name\"></span>\n        </a>\n      </li>\n    </ul>\n  </div>\n  <input type=\"tel\" class=\"form-control\" ng-model=\"number\"/>\n</section>\n");}]);
 },{}],2:[function(require,module,exports){
 (function (global){
 'use strict';
-
-global.jQuery = (typeof window !== "undefined" ? window['jQuery'] : typeof global !== "undefined" ? global['jQuery'] : null);
-(typeof window !== "undefined" ? window['bootstrap'] : typeof global !== "undefined" ? global['bootstrap'] : null);
 
 var bcCountries = (typeof window !== "undefined" ? window['bcCountries'] : typeof global !== "undefined" ? global['bcCountries'] : null);
 var angular = (typeof window !== "undefined" ? window['angular'] : typeof global !== "undefined" ? global['angular'] : null);
@@ -13,7 +10,7 @@ var angular = (typeof window !== "undefined" ? window['angular'] : typeof global
 global.angular = angular;
 require('../build/js/templates');
 
-angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNumber', function() {
+angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap']).directive('bcPhoneNumber', function() {
 
   function getPreferredCountries(preferredCodes) {
     var preferredCountries = [];
@@ -58,9 +55,12 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNu
         var defaultCountryCode = scope.defaultCountryCode;
 
         if (defaultCountryCode) {
-          scope.selectedCountry = bcCountries.getCountryByIso2Code(defaultCountryCode);
-          scope.ngModel = '';
-          scope.number = '';
+          var defaultCountry = bcCountries.getCountryByIso2Code(defaultCountryCode);
+          var number = bcCountries.changeDialCode(scope.number, defaultCountry.dialCode);
+
+          scope.selectedCountry = defaultCountry;
+          scope.ngModel = number;
+          scope.number = number;
         }
       };
 
@@ -96,4 +96,5 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNu
 module.exports = 'bcPhoneNumber';
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../build/js/templates":1}]},{},[2]);
+},{"../build/js/templates":1}]},{},[2])(2)
+});

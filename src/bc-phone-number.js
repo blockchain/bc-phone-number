@@ -1,15 +1,12 @@
 'use strict';
 
-global.jQuery = require('jquery');
-require('bootstrap');
-
 var bcCountries = require('bc-countries');
 var angular = require('angular');
 
 global.angular = angular;
 require('../build/js/templates');
 
-angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNumber', function() {
+angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap']).directive('bcPhoneNumber', function() {
 
   function getPreferredCountries(preferredCodes) {
     var preferredCountries = [];
@@ -54,9 +51,12 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates']).directive('bcPhoneNu
         var defaultCountryCode = scope.defaultCountryCode;
 
         if (defaultCountryCode) {
-          scope.selectedCountry = bcCountries.getCountryByIso2Code(defaultCountryCode);
-          scope.ngModel = '';
-          scope.number = '';
+          var defaultCountry = bcCountries.getCountryByIso2Code(defaultCountryCode);
+          var number = bcCountries.changeDialCode(scope.number, defaultCountry.dialCode);
+
+          scope.selectedCountry = defaultCountry;
+          scope.ngModel = number;
+          scope.number = number;
         }
       };
 
