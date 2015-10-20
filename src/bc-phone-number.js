@@ -6,7 +6,13 @@ var angular = require('angular');
 global.angular = angular;
 require('../build/js/templates');
 
-angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap']).directive('bcPhoneNumber', function() {
+angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
+.service('bcPhoneNumber', function() {
+
+  this.isValid = bcCountries.isValidNumber;
+  this.format = bcCountries.formatNumber;
+})
+.directive('bcPhoneNumber', function() {
 
   if (typeof (bcCountries) === 'undefined') {
     throw new('bc-countries not found, did you forget to load the Javascript?');
