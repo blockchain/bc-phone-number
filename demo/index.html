@@ -33,6 +33,10 @@
       <p>Is valid: <span ng-bind='vm.isValid'></span></p>
       <p>Number: <span ng-bind='vm.theNumber'></span></p>
     </form>
+    <div class='form-group'>
+      <input type='tel' class='form-control' ng-model='vm.newNumber' placeholder='Change number'>
+    </div>
+    <button type='button' class='btn btn-primary' ng-click='vm.theNumber = vm.newNumber'>Change</button>
   </div>
 </body>
 </html>

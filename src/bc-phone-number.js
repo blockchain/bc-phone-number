@@ -64,6 +64,10 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap']).dire
         }
       };
 
+      scope.$watch('ngModel', function(newValue) {
+        scope.number = newValue;
+      });
+
       scope.$watch('number', function(newValue) {
         ctrl.$setValidity('phoneNumber', bcCountries.isValidNumber(newValue));
         scope.isValid = bcCountries.isValidNumber(newValue);
