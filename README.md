@@ -26,4 +26,12 @@ Just download the [dist](https://github.com/Ahimta/bc-phone-number/tree/master/d
 <bc-phone-number ng-model='theNumber' default-country='us' preferred-countries='us gb ca' is-valid='isValid'></bc-phone-number>
 ```
 
+```js
+angular.module('myModule', ['bcPhoneNumber', function(bcPhoneNumber) {
+
+  scope.formattedNumber = bcPhoneNumber.format('966501234567');
+  scope.isValid = bcPhoneNumber.isValid(scope.formattedNumber);
+}]);
+```
+
 Note that`ng-model` and `is-valid` are scope variables.
