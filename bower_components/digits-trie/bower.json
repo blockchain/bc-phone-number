@@ -1,0 +1,29 @@
+{
+  "name": "digits-trie",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Ahimta/digits-trie",
+  "authors": [
+    "Abdullah Alansari <ahimta@gmail.com>"
+  ],
+  "description": "Fast prefix operations for strings of digits",
+  "main": "dist/digits-trie.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "trie",
+    "digits",
+    "phone",
+    "prefix"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

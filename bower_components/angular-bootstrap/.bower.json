@@ -1,0 +1,32 @@
+{
+  "author": {
+    "name": "https://github.com/angular-ui/bootstrap/graphs/contributors"
+  },
+  "name": "angular-bootstrap",
+  "keywords": [
+    "angular",
+    "angular-ui",
+    "bootstrap"
+  ],
+  "license": "MIT",
+  "ignore": [],
+  "description": "Native AngularJS (Angular) directives for Bootstrap.",
+  "version": "0.14.1",
+  "main": [
+    "./ui-bootstrap-tpls.js"
+  ],
+  "dependencies": {
+    "angular": ">=1.3.0"
+  },
+  "homepage": "https://github.com/angular-ui/bootstrap-bower",
+  "_release": "0.14.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.14.1",
+    "commit": "5d23672057fc7fd4aac3fe229ef877322aa1412e"
+  },
+  "_source": "git://github.com/angular-ui/bootstrap-bower.git",
+  "_target": "~0.14.1",
+  "_originalSource": "angular-bootstrap",
+  "_direct": true
+}

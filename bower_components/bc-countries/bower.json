@@ -1,0 +1,30 @@
+{
+  "name": "bc-countries",
+  "version": "2.0.0",
+  "homepage": "https://github.com/Ahimta/bc-countries",
+  "authors": [
+    "Abdullah Alansari <ahimta@gmail.com>"
+  ],
+  "description": "A convenient Javascript countries utilities (e.g: dial codes, country codes, names)",
+  "main": "dist/bc-countries.js",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "country",
+    "phone"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "digits-trie": "~1.0.0",
+    "google-libphonenumber": "~1.0.7"
+  }
+}

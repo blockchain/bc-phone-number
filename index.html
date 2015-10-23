@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app='bcPhoneNumberDemo'>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Phone Number Demo</title>
+
+  <!-- bower:css -->
+  <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+  <link rel='stylesheet' href='bower_components/bc-css-flags/dist/css/bc-css-flags.css' />
+  <!-- endbower -->
+
+  <!-- bower:js -->
+  <script src='bower_components/angular/angular.js'></script>
+  <script src='bower_components/digits-trie/dist/digits-trie.js'></script>
+  <script src='bower_components/google-libphonenumber/dist/browser/libphonenumber.js'></script>
+  <script src='bower_components/bc-countries/dist/bc-countries.js'></script>
+  <script src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js'></script>
+  <!-- endbower -->
+
+  <link rel='stylesheet' href='dist/css/bc-phone-number.css'>
+  <script src='dist/js/bc-phone-number.js'></script>
+  <script src='demo.js'></script>
+</head>
+<body ng-controller='MainCtrl as vm'>
+  <div class='container'>
+    <h1>Phone Number Demo</h1>
+    <form name='myForm'>
+      <bc-phone-number name='number' ng-model='vm.theNumber' default-country='us' preferred-countries='us gb ca'
+        is-valid='vm.isValid'>
+      </bc-phone-number>
+      <p>Is valid ngModel: <span ng-bind='myForm.number.$valid'></span></p>
+      <p>Is valid: <span ng-bind='vm.isValid'></span></p>
+      <p>Number: <span ng-bind='vm.theNumber'></span></p>
+    </form>
+    <div class='form-group'>
+      <input type='tel' class='form-control' ng-model='vm.newNumber' placeholder='Change number'>
+    </div>
+    <button type='button' class='btn btn-primary' ng-click='vm.theNumber = vm.newNumber'>Change</button>
+  </div>
+</body>
+</html>

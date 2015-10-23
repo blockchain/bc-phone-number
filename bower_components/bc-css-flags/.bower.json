@@ -1,0 +1,45 @@
+{
+  "name": "bc-css-flags",
+  "version": "3.0.0",
+  "authors": [
+    "Abdullah Alansari <ahimta@gmail.com>"
+  ],
+  "description": "Countries flags styles using only one picture",
+  "main": [
+    "dist/css/bc-css-flags.scss",
+    "dist/css/bc-css-flags.css",
+    "dist/img/flags@2x.png",
+    "dist/img/flags.png"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "css",
+    "flags"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Ahimta/bc-css-flags",
+  "repository": {
+    "url": "git://github.com/Ahimta/bc-css-flags.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "lib"
+  ],
+  "_release": "3.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.0.0",
+    "commit": "253c07ef2736565ec4217b48a4470d5c9dbb1b26"
+  },
+  "_source": "git://github.com/Ahimta/bc-css-flags.git",
+  "_target": "~3.0.0",
+  "_originalSource": "bc-css-flags"
+}
