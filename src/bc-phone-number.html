@@ -6,7 +6,7 @@
     <ul class="uib-dropdown-menu bc-phone-number-dropdown-menu" role="menu">
       <li ng-repeat="country in preferredCountries" ng-click="selectCountry(country)"
           ng-class="{active: isCountrySelected(country)}" role="menuitem">
-        <a href="#" target="_self" class="bc-phone-number-country-anchor">
+        <a href="#" ng-click="$event.preventDefault()" class="bc-phone-number-country-anchor">
           <i class="glyphicon iti-flag bc-phone-number-country-icon" ng-class="country.iso2Code"></i>
           <span ng-bind="country.name"></span>
         </a>
@@ -14,7 +14,7 @@
       <li role="separator" class="divider" ng-show="preferredCountries && preferredCountries.length"></li>
       <li ng-repeat="country in allCountries" ng-click="selectCountry(country)"
           ng-class="{active: isCountrySelected(country)}" role="menuitem">
-        <a href="#" target="_self" class="bc-phone-number-country-anchor">
+        <a href="#" ng-click="$event.preventDefault()" class="bc-phone-number-country-anchor">
           <i class="glyphicon iti-flag bc-phone-number-country-icon" ng-class="country.iso2Code"></i>
           <span ng-bind="country.name"></span>
         </a>
