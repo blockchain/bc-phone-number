@@ -6,7 +6,9 @@
   ],
   "version": "5.0.7",
   "authors": [
-    "Abdullah Alansari <ahimta@gmail.com>"
+    "Abdullah Alansari <ahimta@gmail.com>",
+    "Justin Tormey <justin@blockchain.com>",
+    "Sjors Provoost <sjors@blockchain.com>"
   ],
   "description": "An AngularJS international phone input directive",
   "moduleType": [
