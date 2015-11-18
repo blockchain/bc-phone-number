@@ -1,4 +1,4 @@
-# bc-phone-number [![Build Status](https://travis-ci.org/Ahimta/bc-phone-number.svg?branch=master)](https://travis-ci.org/Ahimta/bc-phone-number)
+# bc-phone-number [![Build Status](https://travis-ci.org/blockchain/bc-phone-number.svg?branch=master)](https://travis-ci.org/blockchain/bc-phone-number)
 
 ## Installation
 
@@ -19,7 +19,7 @@ angular.module('myApp', [require('bc-phone-number')])
 ```
 
 ### Other (not recommended)
-Just download the [dist](https://github.com/Ahimta/bc-phone-number/tree/master/dist) folder.
+Just download the [dist](https://github.com/blockchain/bc-phone-number/tree/master/dist) folder.
 
 ## Usage
 ```html

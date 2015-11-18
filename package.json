@@ -1,6 +1,6 @@
 {
   "name": "bc-phone-number",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "description": "An AngularJS international phone input directive",
   "main": "src/bc-phone-number.js",
   "scripts": {
@@ -14,9 +14,9 @@
     "phone"
   ],
   "author": "Abdullah Alansari <ahimta@gmail.com>",
-  "homepage": "https://github.com/Ahimta/bc-phone-number",
+  "homepage": "https://github.com/blockchain/bc-phone-number",
   "repository": {
-    "url": "git://github.com/Ahimta/bc-phone-number.git",
+    "url": "git://github.com/blockchain/bc-phone-number.git",
     "type": "git"
   },
   "license": "MIT",
