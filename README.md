@@ -44,15 +44,15 @@ Build a new version:
 gulp build
 ```
 
-Commit and update version:
+Update version in bower.json and package.json and commit:
 
 ```sh
-grunt bump:patch
+git commit -a -m "Release 5.0.8"
 ```
 
 Tag, sign and push:
 
 ```sh
-git tag -s v5.0.8
+git tag -s v5.0.8 -m "v5.0.8"
 git push --tags
 ```

@@ -21,14 +21,6 @@ module.exports = function(grunt) {
         browsers: ['Chrome']
       }
     },
-    bump: {
-      options: {
-        files: ['bower.json', 'package.json'],
-        commit: true,
-        commitMessage: 'Release v%VERSION%',
-        commitFiles: ['bower.json', 'package.json'],
-      }
-    },
     git_changelog: {
       default: {
         options: {
@@ -39,13 +31,9 @@ module.exports = function(grunt) {
         }
       }
     }
-
-
-
   });
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('git-changelog');
 };

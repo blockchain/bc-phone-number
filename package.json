@@ -1,6 +1,6 @@
 {
   "name": "bc-phone-number",
-  "version": "5.0.8",
+  "version": "5.0.9",
   "description": "An AngularJS international phone input directive",
   "main": "src/bc-phone-number.js",
   "scripts": {
@@ -36,7 +36,6 @@
     "git-changelog": "^0.1.8",
     "grunt": "^0.4.5",
     "grunt-browserify": "^4.0.1",
-    "grunt-bump": "^0.6.0",
     "grunt-karma": "^0.12.1",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.7.0",
