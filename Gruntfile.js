@@ -33,10 +33,24 @@ module.exports = function(grunt) {
         push: true,
         pushTo: 'origin'
       }
+    },
+    git_changelog: {
+      default: {
+        options: {
+          file: 'Changelog.md',
+          grep_commits: '^fix|^feat|^docs|^style|^refactor|^chore|^test|BREAKING',
+          repo_url: 'https://github.com/blockchain/bc-phone-number',
+          branch_name: 'master'
+        }
+      }
     }
+
+
+
   });
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-bump');
+  grunt.loadNpmTasks('git-changelog');
 };

@@ -4,11 +4,12 @@
     "dist/css/bc-phone-number.css",
     "dist/js/bc-phone-number.js"
   ],
-  "version": "5.0.7",
+  "version": "5.0.8",
   "authors": [
     "Abdullah Alansari <ahimta@gmail.com>",
     "Justin Tormey <justin@blockchain.com>",
-    "Sjors Provoost <sjors@blockchain.com>"
+    "Sjors Provoost <sjors@blockchain.com>",
+    "Philip London <philip@blockchain.com>"
   ],
   "description": "An AngularJS international phone input directive",
   "moduleType": [
