@@ -27,11 +27,6 @@ module.exports = function(grunt) {
         commit: true,
         commitMessage: 'Release v%VERSION%',
         commitFiles: ['bower.json', 'package.json'],
-        createTag: true,
-        tagName: 'v%VERSION%',
-        tagMessage: 'Version %VERSION%',
-        push: true,
-        pushTo: 'origin'
       }
     },
     git_changelog: {
