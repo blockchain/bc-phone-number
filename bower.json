@@ -40,7 +40,7 @@
     "bootstrap": "~3.3.5",
     "bc-css-flags": "~3.0.0",
     "bc-countries": "~2.0.0",
-    "angular-bootstrap": "~0.14.1"
+    "angular-bootstrap": "~1.1.*"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.7"
