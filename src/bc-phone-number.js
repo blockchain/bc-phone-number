@@ -71,6 +71,8 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
         }
       };
 
+      scope.resetCountry();
+
       scope.$watch('ngModel', function(newValue) {
         scope.number = newValue;
       });
