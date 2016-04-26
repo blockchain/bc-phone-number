@@ -35,7 +35,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
     scope: {
       preferredCountriesCodes: '@preferredCountries',
       defaultCountryCode: '@defaultCountry',
-      defaultCountry: '=',
+      selectedCountry: '=',
       isValid: '=',
       ngModel: '='
     },
