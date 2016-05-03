@@ -35,13 +35,19 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
     scope: {
       preferredCountriesCodes: '@preferredCountries',
       defaultCountryCode: '@defaultCountry',
+      selectedCountry: '=',
       isValid: '=',
-      ngModel: '='
+      ngModel: '=',
+      ngChange: '=',
+      ngDisabled: '='
     },
     link: function(scope, element, attrs, ctrl) {
       scope.selectedCountry = bcCountries.getCountryByIso2Code(scope.defaultCountryCode || 'us');
       scope.allCountries = bcCountries.getAllCountries();
       scope.number = scope.ngModel;
+      scope.changed = function() {
+        scope.ngChange();
+      }
 
       if (scope.preferredCountriesCodes) {
         var preferredCodes = scope.preferredCountriesCodes.split(' ');
@@ -69,6 +75,8 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
           scope.number = number;
         }
       };
+
+      scope.resetCountry();
 
       scope.$watch('ngModel', function(newValue) {
         scope.number = newValue;
