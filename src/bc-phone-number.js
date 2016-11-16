@@ -39,7 +39,9 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
       isValid: '=',
       ngModel: '=',
       ngChange: '&',
-      ngDisabled: '='
+      ngDisabled: '=',
+      name: '@',
+      label: '@'
     },
     link: function(scope, element, attrs, ctrl) {
       scope.selectedCountry = bcCountries.getCountryByIso2Code(scope.defaultCountryCode || 'us');
