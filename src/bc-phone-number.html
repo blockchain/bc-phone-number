@@ -1,7 +1,9 @@
 <section class="input-group">
+  <label for="{{name}}" ng-if="label">{{label}}</label>
   <div class="input-group-btn" uib-dropdown uib-keyboard-nav>
     <button type="button" class="btn btn-default" type="button" uib-dropdown-toggle>
       <span class="glyphicon iti-flag bc-phone-number-flag" ng-class="selectedCountry.iso2Code"></span><span class="caret"></span>
+      <span class="sr-only">Select country: {{selectedCountry.name}}</span>
     </button>
     <ul class="uib-dropdown-menu bc-phone-number-dropdown-menu dropdown-menu" role="menu">
       <li ng-repeat="country in preferredCountries" ng-click="selectCountry(country)"
@@ -21,5 +23,5 @@
       </li>
     </ul>
   </div>
-  <input type="tel" class="form-control" ng-model="number" ng-disabled="ngDisabled" ng-change="changed()"/>
+  <input type="tel" name="{{name}}" id="{{name}}" class="form-control" ng-model="number" ng-disabled="ngDisabled" ng-change="changed()"/>
 </section>
