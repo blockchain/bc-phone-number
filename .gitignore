@@ -2,3 +2,4 @@ bower_components/
 node_modules/
 build/
 Changelog.md
+npm-debug.log
