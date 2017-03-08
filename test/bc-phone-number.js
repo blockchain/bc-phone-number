@@ -1,46 +1,48 @@
-'use strict';
+import angular from 'angular';
+import 'angular-mocks';
+import bcPhoneNumber from '../src/bc-phone-number';
 
-describe('Directive: bc-phone-number', function() {
+describe('Directive: bc-phone-number', () => {
 
   // load the directive's module
-  beforeEach(module('bcPhoneNumber'));
+  beforeEach(angular.mock.module(bcPhoneNumber));
 
-  var scope;
+  let scope;
 
-  beforeEach(inject(function($rootScope) {
+  beforeEach(inject($rootScope => {
     scope = $rootScope.$new();
     scope.$digest();
   }));
 
-  it('should make hidden element visible', inject(function($compile) {
-    var element = angular.element('<bc-phone-number ng-model="number"></bc-phone-number>');
+  it('should make hidden element visible', inject($compile => {
+    let element = angular.element('<bc-phone-number ng-model="number"></bc-phone-number>');
     element = $compile(element)(scope);
 
     expect(scope.number).toBe(undefined);
   }));
 });
 
-describe('Service: bcPhoneNumber', function() {
+describe('Service: bcPhoneNumber', () => {
 
   // load the service's module
-  beforeEach(module('bcPhoneNumber'));
+  beforeEach(angular.mock.module('bcPhoneNumber'));
 
   // instantiate service
-  var bcPhoneNumber;
-  beforeEach(inject(function(_bcPhoneNumber_) {
+  let bcPhoneNumber;
+  beforeEach(inject(_bcPhoneNumber_ => {
     bcPhoneNumber = _bcPhoneNumber_;
   }));
 
-  describe('bcPhoneNumber.format(number)', function() {
+  describe('bcPhoneNumber.format(number)', () => {
 
-    it('should work', function() {
+    it('should work', () => {
       expect(bcPhoneNumber.format('966501234567')).toEqual('+966 50 123 4567');
     });
   });
 
-  describe('bcPhoneNumber.isValid(number)', function() {
+  describe('bcPhoneNumber.isValid(number)', () => {
 
-    it('should work', function() {
+    it('should work', () => {
       expect(bcPhoneNumber.isValid('+966 50 123 4567')).toBe(true);
     });
   });

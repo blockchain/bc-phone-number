@@ -1,12 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - '0.10'
-  - '0.12'
-  - '4.0'
-  - '4.1'
-  - '4.2'
+  - '7.6'
 before_script:
-  - npm install -g bower grunt-cli gulp
-  - bower install
-script: 'gulp build && gulp test'
+  - npm install
+script: 'gulp test'

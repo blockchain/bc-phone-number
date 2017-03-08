@@ -3,6 +3,8 @@
 // Generated on 2015-10-05 using
 // generator-karma 1.0.0
 
+let wpConfig = require('../webpack.config');
+
 module.exports = function(config) {
   'use strict';
 
@@ -21,23 +23,24 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // bower:js
-      '../bower_components/angular/angular.js',
-      '../bower_components/digits-trie/dist/digits-trie.js',
-      '../bower_components/google-libphonenumber/dist/browser/libphonenumber.js',
-      '../bower_components/bc-countries/dist/bc-countries.js',
-      '../bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-      '../bower_components/angular-mocks/angular-mocks.js',
-      // endbower
-
-      '../dist/js/bc-phone-number.js',
-
-      'bc-phone-number.js'
+      {pattern: 'bc-phone-number.js', watched: false}
     ],
 
-    // list of files / patterns to exclude
-    exclude: [
-    ],
+    preprocessors: {
+      // add webpack as preprocessor
+      'bc-phone-number.js': ['webpack']
+    },
+
+    webpack: {
+      devtool: 'inline-source-map',
+      module: wpConfig.module
+    },
+
+    webpackMiddleware: {
+      // webpack-dev-middleware configuration
+      // i. e.
+      stats: 'errors-only'
+    },
 
     // web server port
     port: 9876,
@@ -52,17 +55,6 @@ module.exports = function(config) {
     // - IE (only Windows)
     browsers: [
       'PhantomJS'
-    ],
-
-    // Which plugins to enable
-    plugins: [
-      'karma-phantomjs-launcher',
-      'karma-firefox-launcher',
-      'karma-chrome-launcher',
-      'karma-safari-launcher',
-      'karma-opera-launcher',
-      'karma-ie-launcher',
-      'karma-jasmine'
     ],
 
     // Continuous Integration mode

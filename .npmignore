@@ -1,0 +1,14 @@
+bower_components/
+node_modules/
+build/
+Changelog.md
+npm-debug.log
+/bower.json
+/.travis.yml
+/demo/
+/demo-requirejs/
+/demo-webpack/
+/Gruntfile.js
+/test/
+/yarn.lock
+/.idea/

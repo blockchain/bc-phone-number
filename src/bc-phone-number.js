@@ -1,36 +1,29 @@
-'use strict';
+import * as bcCountries from 'bc-countries';
+import angular from 'angular';
+import 'angular-ui-bootstrap';
+import './bc-phone-number.css';
 
-var bcCountries = require('bc-countries');
-var angular = require('angular');
-
-global.angular = angular;
-require('../build/js/templates');
-
-angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
+export default angular.module('bcPhoneNumber', ['ui.bootstrap'])
 .service('bcPhoneNumber', function() {
-
   this.isValid = bcCountries.isValidNumber;
   this.format = bcCountries.formatNumber;
 })
-.directive('bcPhoneNumber', function() {
-
-  if (typeof (bcCountries) === 'undefined') {
-    throw new('bc-countries not found, did you forget to load the Javascript?');
-  }
-
+.directive('bcPhoneNumber', () => {
   function getPreferredCountries(preferredCodes) {
-    var preferredCountries = [];
+    let preferredCountries = [];
 
-    for (var i = 0; i < preferredCodes.length; i++) {
-      var country = bcCountries.getCountryByIso2Code(preferredCodes[i]);
-      if (country) { preferredCountries.push(country); }
+    for (let i = 0; i < preferredCodes.length; i++) {
+      let country = bcCountries.getCountryByIso2Code(preferredCodes[i]);
+      if (country) {
+        preferredCountries.push(country);
+      }
     }
 
     return preferredCountries;
   }
 
   return {
-    templateUrl: 'bc-phone-number/bc-phone-number.html',
+    template: require('./bc-phone-number.html'),
     require: 'ngModel',
     scope: {
       preferredCountriesCodes: '@preferredCountries',
@@ -43,34 +36,32 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
       name: '@',
       label: '@'
     },
-    link: function(scope, element, attrs, ctrl) {
+    link: (scope, element, attrs, ctrl) => {
       scope.selectedCountry = bcCountries.getCountryByIso2Code(scope.defaultCountryCode || 'us');
       scope.allCountries = bcCountries.getAllCountries();
       scope.number = scope.ngModel;
-      scope.changed = function() {
+      scope.changed = () => {
         scope.ngChange();
-      }
+      };
 
       if (scope.preferredCountriesCodes) {
-        var preferredCodes = scope.preferredCountriesCodes.split(' ');
+        let preferredCodes = scope.preferredCountriesCodes.split(' ');
         scope.preferredCountries = getPreferredCountries(preferredCodes);
       }
 
-      scope.selectCountry = function(country) {
+      scope.selectCountry = country => {
         scope.selectedCountry = country;
         scope.number = scope.ngModel = bcCountries.changeDialCode(scope.number, country.dialCode);
       };
 
-      scope.isCountrySelected = function(country) {
-        return country.iso2Code == scope.selectedCountry.iso2Code;
-      };
+      scope.isCountrySelected = country => country.iso2Code == scope.selectedCountry.iso2Code;
 
-      scope.resetCountry = function() {
-        var defaultCountryCode = scope.defaultCountryCode;
+      scope.resetCountry = () => {
+        let defaultCountryCode = scope.defaultCountryCode;
 
         if (defaultCountryCode) {
-          var defaultCountry = bcCountries.getCountryByIso2Code(defaultCountryCode);
-          var number = bcCountries.changeDialCode(scope.number, defaultCountry.dialCode);
+          let defaultCountry = bcCountries.getCountryByIso2Code(defaultCountryCode);
+          let number = bcCountries.changeDialCode(scope.number, defaultCountry.dialCode);
 
           scope.selectedCountry = defaultCountry;
           scope.ngModel = number;
@@ -80,24 +71,24 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
 
       scope.resetCountry();
 
-      scope.$watch('ngModel', function(newValue) {
+      scope.$watch('ngModel', newValue => {
         scope.number = newValue;
       });
 
-      scope.$watch('number', function(newValue) {
+      scope.$watch('number', newValue => {
         ctrl.$setValidity('phoneNumber', bcCountries.isValidNumber(newValue));
         scope.isValid = bcCountries.isValidNumber(newValue);
       });
 
-      scope.$watch('number', function(newValue) {
+      scope.$watch('number', newValue => {
         if (newValue === '') { scope.ngModel = ''; }
         else if (newValue) {
-          var digits = bcCountries.getDigits(newValue);
-          var countryCode = bcCountries.getIso2CodeByDigits(digits);
+          let digits = bcCountries.getDigits(newValue);
+          let countryCode = bcCountries.getIso2CodeByDigits(digits);
 
           if (countryCode) {
-            var dialCode = bcCountries.getDialCodeByDigits(digits);
-            var number = bcCountries.formatNumber(newValue);
+            let dialCode = bcCountries.getDialCodeByDigits(digits);
+            let number = bcCountries.formatNumber(newValue);
 
             if (dialCode !== scope.selectedCountry.dialCode) {
               scope.selectedCountry = bcCountries.getCountryByIso2Code(countryCode);
@@ -111,6 +102,4 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
       });
     }
   };
-});
-
-module.exports = 'bcPhoneNumber';
+}).name;
