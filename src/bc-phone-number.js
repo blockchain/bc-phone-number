@@ -85,8 +85,8 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
       });
 
       scope.$watch('number', function(newValue) {
-        ctrl.$setValidity('phoneNumber', bcCountries.isValidNumber(newValue));
         scope.isValid = bcCountries.isValidNumber(newValue);
+        ctrl.$setValidity('phoneNumber', scope.isValid);
       });
 
       scope.$watch('number', function(newValue) {
