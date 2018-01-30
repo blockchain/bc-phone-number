@@ -39,7 +39,7 @@ gulp.task('browserify', executeTask('grunt browserify'));
 
 gulp.task('deploy', executeTask('sh demo/gh-pages.sh'));
 
-gulp.task('test', executeTask('grunt karma:unit'));
+gulp.task('test', executeTask('node_modules/karma/bin/karma start test/karma.conf.js'));
 
 gulp.task('server:connect', function() {
   connect.server({
