@@ -15,7 +15,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
 .directive('bcPhoneNumber', function() {
 
   if (typeof (bcCountries) === 'undefined') {
-    throw new('bc-countries not found, did you forget to load the Javascript?');
+    throw new Error('bc-countries not found, did you forget to load the Javascript?');
   }
 
   function getPreferredCountries(preferredCodes) {
@@ -36,7 +36,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
       preferredCountriesCodes: '@preferredCountries',
       defaultCountryCode: '@defaultCountry',
       selectedCountry: '=?',
-      isValid: '=',
+      isValid: '=?',
       ngModel: '=',
       ngChange: '&',
       ngDisabled: '=',
@@ -85,8 +85,8 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
       });
 
       scope.$watch('number', function(newValue) {
-        ctrl.$setValidity('phoneNumber', bcCountries.isValidNumber(newValue));
         scope.isValid = bcCountries.isValidNumber(newValue);
+        ctrl.$setValidity('phoneNumber', scope.isValid);
       });
 
       scope.$watch('number', function(newValue) {
