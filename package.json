@@ -1,6 +1,6 @@
 {
   "name": "bc-phone-number",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "An AngularJS international phone input directive",
   "main": "src/bc-phone-number.js",
   "scripts": {
