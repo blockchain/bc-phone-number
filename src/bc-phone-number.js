@@ -12,7 +12,7 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
   this.isValid = bcCountries.isValidNumber;
   this.format = bcCountries.formatNumber;
 })
-.directive('bcPhoneNumber', function() {
+.directive('bcPhoneNumber', ['$timeout', function($timeout) {
 
   if (typeof (bcCountries) === 'undefined') {
     throw new Error('bc-countries not found, did you forget to load the Javascript?');
@@ -90,27 +90,29 @@ angular.module('bcPhoneNumber', ['bcPhoneNumberTemplates', 'ui.bootstrap'])
       });
 
       scope.$watch('number', function(newValue) {
-        if (newValue === '') { scope.ngModel = ''; }
-        else if (newValue) {
-          var digits = bcCountries.getDigits(newValue);
-          var countryCode = bcCountries.getIso2CodeByDigits(digits);
+        $timeout(function () {
+          if (newValue === '') { scope.ngModel = ''; }
+          else if (newValue) {
+            var digits = bcCountries.getDigits(newValue);
+            var countryCode = bcCountries.getIso2CodeByDigits(digits);
 
-          if (countryCode) {
-            var dialCode = bcCountries.getDialCodeByDigits(digits);
-            var number = bcCountries.formatNumber(newValue);
+            if (countryCode) {
+              var dialCode = bcCountries.getDialCodeByDigits(digits);
+              var number = bcCountries.formatNumber(newValue);
 
-            if (dialCode !== scope.selectedCountry.dialCode) {
-              scope.selectedCountry = bcCountries.getCountryByIso2Code(countryCode);
+              if (dialCode !== scope.selectedCountry.dialCode) {
+                scope.selectedCountry = bcCountries.getCountryByIso2Code(countryCode);
+              }
+
+              scope.ngModel = number;
+              scope.number = number;
             }
-
-            scope.ngModel = number;
-            scope.number = number;
+            else { scope.ngModel = newValue; }
           }
-          else { scope.ngModel = newValue; }
-        }
+        });
       });
     }
   };
-});
+}]);
 
 module.exports = 'bcPhoneNumber';
